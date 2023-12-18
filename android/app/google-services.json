@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "166006694890",
+    "project_id": "tramber-217c4",
+    "storage_bucket": "tramber-217c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166006694890:android:8637ad87c9b667a673c893",
+        "android_client_info": {
+          "package_name": "com.example.tramber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeHRDZc2zYhQ67swMAzN_X193Z97TbEhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
