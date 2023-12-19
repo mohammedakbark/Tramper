@@ -139,7 +139,7 @@ class _loginState extends State<login> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          await auth.login(
+                          await authInstence.login(
                             emailController.text,
                             passwordController.text,
                             context,
@@ -221,7 +221,7 @@ class _loginState extends State<login> {
                             style: ElevatedButton.styleFrom(
                                 elevation: 1, backgroundColor: Colors.white),
                             onPressed: () {
-                              auth.signWithGoogle(
+                              authInstence.signWithGoogle(
                                 context,
                               );
                             },

@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tramber/Model/user_model.dart';
 import 'package:tramber/View/home.dart';
 import 'package:tramber/View/intro_pages/get_start.dart';
 import 'package:tramber/ViewModel/check_login_preference.dart';
+import 'package:tramber/utils/variables.dart';
 
 class FirebaseAuths {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -68,14 +70,27 @@ class FirebaseAuths {
   ) async {
     try {
       final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
-
       final GoogleSignInAuthentication? gAuth = await gUser?.authentication;
       final credential = GoogleAuthProvider.credential(
           accessToken: gAuth?.accessToken, idToken: gAuth?.idToken);
 
-      return await FirebaseAuth.instance
-          .signInWithCredential(credential)
-          .then((value) async {
+await auth.signInWithCredential(credential)
+      // return await auth.signInWithCredential(credential)
+      .then((value) async {
+        await storenstence.addUserToCollectionUser(
+    value.user?.uid,
+            UserModel(
+
+                email: "${gUser?.email}",
+                gender: "",
+                password: "",
+                phonenumber: 0,
+                profileimage: "${gUser?.photoUrl}",
+                proofimage: "",
+                userID: "${ value.user?.uid}",
+                username: "${gUser?.displayName}"),
+            context);
+
         setLoginPrefertrue();
         return await Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => home()));
@@ -119,9 +134,9 @@ class FirebaseAuths {
     signoutFromGoogle(
       context,
     );
-    
-    Navigator.pushAndRemoveUntil(
-        context, MaterialPageRoute(builder: (context)=>intro1()), (route) => false);
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => intro1()), (route) => false);
   }
 
 /////////////////////////////////////////////

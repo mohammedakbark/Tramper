@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tramber/View/intro_pages/splash_screen.dart';
+import 'package:tramber/View/profile/profile.dart';
 import 'package:tramber/ViewModel/check_login_preference.dart';
+import 'package:tramber/ViewModel/firestore.dart';
 import 'package:tramber/firebase_options.dart';
 
 void main() async {
@@ -30,15 +33,20 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // title: 'Flutter Demo',
-      // theme: ThemeData(
-
-      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      //   useMaterial3: true,
-      // ),
-      home: const splash_screen(),
-      // debugShowCheckedModeBanner: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Firestore>(create: (_) => Firestore())
+      ],
+      child: MaterialApp(
+        // title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const splash_screen(),
+        // home: profile(),
+        // debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

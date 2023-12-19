@@ -11,7 +11,7 @@ void checkLoginStatus(context) async {
   if (isLoggedIn == true) {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print(uid);
-    await store.getloginUSer(uid, context);
+    await storenstence.getloginUSer(uid, context);
   } else {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => intro1()));

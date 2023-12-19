@@ -14,14 +14,15 @@ class sign_up extends StatefulWidget {
   State<sign_up> createState() => _sign_upState();
 }
 
-TextEditingController emailCtlr = TextEditingController();
+
+
+class _sign_upState extends State<sign_up> {
+  TextEditingController emailCtlr = TextEditingController();
 TextEditingController passwordCtlr = TextEditingController();
 TextEditingController conforrmPasswordCtlr = TextEditingController();
 TextEditingController userNameCtlr = TextEditingController();
 TextEditingController numberCtlr = TextEditingController();
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-class _sign_upState extends State<sign_up> {
   @override
   Widget build(BuildContext context) {
     final hight = MediaQuery.of(context).size.height;
@@ -205,12 +206,12 @@ class _sign_upState extends State<sign_up> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          await auth.sign(
+                          await authInstence.sign(
                               emailCtlr.text, passwordCtlr.text, context);
                           int phonemuber = int.parse(numberCtlr.text);
                           // ignore: use_build_context_synchronously
-                          await store.addUserToCollectionUser(
-                              auth.uID,
+                          await storenstence.addUserToCollectionUser(
+                              authInstence.uID,
                               UserModel(
                                   email: emailCtlr.text,
                                   gender: "",
@@ -218,7 +219,7 @@ class _sign_upState extends State<sign_up> {
                                   phonenumber: phonemuber,
                                   profileimage: "",
                                   proofimage: "",
-                                  userID: "${auth.uID}",
+                                  userID: "${authInstence.uID}",
                                   username: userNameCtlr.text),context);
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(context,
@@ -306,9 +307,12 @@ class _sign_upState extends State<sign_up> {
                             style: ElevatedButton.styleFrom(
                                 elevation: 1, backgroundColor: Colors.white),
                             onPressed: () {
-                              auth.signWithGoogle(
+                              authInstence.signWithGoogle(
                                 context,
                               );
+                              
+                                 Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) => home()));
                             },
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,

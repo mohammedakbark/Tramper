@@ -9,6 +9,7 @@ import 'package:tramber/View/profile/tabs/about.dart';
 import 'package:tramber/View/profile/tabs/contact.dart';
 import 'package:tramber/View/profile/tabs/hosting.dart';
 import 'package:tramber/View/profile/update_profile.dart';
+import 'package:tramber/utils/image.dart';
 import 'package:tramber/utils/variables.dart';
 
 class profile extends StatefulWidget {
@@ -43,6 +44,7 @@ class _profileState extends State<profile> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
+        color: Colors.white,
         height: double.infinity,
         width: double.infinity,
         child: Column(
@@ -141,11 +143,32 @@ class _profileState extends State<profile> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 80, top: 60),
-                          child: Text(
-                            "Tramper",
-                            style: GoogleFonts.marcellusSc(
-                                fontSize: 68, color: HexColor("#0080FF")),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 0, vertical: 0),
+                          child: Center(
+                            child: ShaderMask(
+                              shaderCallback: (Rect bounds) {
+                                return const LinearGradient(
+                                  colors: [
+                                    Color.fromARGB(255, 122, 132, 173),
+                                    Color.fromARGB(255, 104, 118, 174),
+                                    Color.fromARGB(255, 104, 118, 174),
+                                    Color.fromARGB(255, 255, 255, 255),
+                                    Color.fromARGB(255, 255, 255, 255),
+                                    Color.fromARGB(255, 255, 255, 255),
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ).createShader(bounds);
+                              },
+                              child: Text(
+                                "Tramper",
+                                style: GoogleFonts.marcellusSc(
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.bold,
+                                    color: HexColor("#3B8DDE")),
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -156,17 +179,20 @@ class _profileState extends State<profile> {
                     height: 110,
                     width: 110,
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage("asset/img_5.png")),
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.cyan),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: storenstence.userModel?.profileimage == ""
+                              ? imageNotFound
+                              : NetworkImage(
+                                  "${storenstence.userModel?.profileimage}")),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
                   ),
                 )
               ],
             ),
             Text(
-              "Jennifer",
+              "${storenstence.userModel?.username}",
               style: GoogleFonts.niramit(
                   fontSize: 28, fontWeight: FontWeight.w700),
             ),
@@ -223,7 +249,7 @@ class _profileState extends State<profile> {
               margin: const EdgeInsets.only(top: 10),
               width: double.infinity,
               height: 260,
-              decoration: BoxDecoration(),
+              decoration: const BoxDecoration(),
               child: pages[current],
             ),
             const Expanded(child: SizedBox()),
@@ -276,9 +302,9 @@ class _profileState extends State<profile> {
                         builder: (context) => Center(
                               child: ElevatedButton(
                                 onPressed: () {
-                                  auth.signOut(context);
+                                  authInstence.signOut(context);
                                 },
-                                child: Text("Log out?"),
+                                child: const Text("Log out?"),
                               ),
                             )),
                     child: ListTile(
