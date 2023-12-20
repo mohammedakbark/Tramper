@@ -211,16 +211,18 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                           int phonemuber = int.parse(numberCtlr.text);
                           // ignore: use_build_context_synchronously
                           await storenstence.addUserToCollectionUser(
-                              authInstence.uID,
-                              UserModel(
-                                  email: emailCtlr.text,
+                            authInstence.uID,
+                             UserModel( 
+                              label: "", 
+                              age: "",
+                              email: emailCtlr.text,
                                   gender: "",
                                   password: passwordCtlr.text,
                                   phonenumber: phonemuber,
                                   profileimage: "",
                                   proofimage: "",
                                   userID: "${authInstence.uID}",
-                                  username: userNameCtlr.text),context);
+                                  username: userNameCtlr.text, about: "", address: "", area: "", city: "", hostingDetails: "", message: "", nickeNmae: "", pincode: "", state: ""),context);
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (context) => home()));

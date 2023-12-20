@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:tramber/View/intro_pages/splash_screen.dart';
 import 'package:tramber/View/profile/profile.dart';
 import 'package:tramber/ViewModel/check_login_preference.dart';
+import 'package:tramber/ViewModel/controll_provider.dart';
 import 'package:tramber/ViewModel/firestore.dart';
+import 'package:tramber/ViewModel/get_locatiion.dart';
 import 'package:tramber/firebase_options.dart';
 
 void main() async {
@@ -35,7 +37,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<Firestore>(create: (_) => Firestore())
+        ChangeNotifierProvider<Firestore>(create: (_) => Firestore()),
+         ChangeNotifierProvider<LocationPrvider>(create: (_) => LocationPrvider()),
+         ChangeNotifierProvider<Controller>(create: (_) => Controller())
       ],
       child: MaterialApp(
         // title: 'Flutter Demo',

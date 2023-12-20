@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tramber/utils/variables.dart';
 class about extends StatefulWidget {
   const about({super.key});
 
@@ -31,7 +32,7 @@ class _aboutState extends State<about> {
 
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text("""Hello, I'm Jenifer, a passionate traveler always in pursuit of new horizons. I find joy in immersing myself in diverse cultures, savoring local cuisines, and collecting stories from every corner of the globe.Also i would like to host Trampers with immense pleasure wich allows us to share a cultural bond.""",style: GoogleFonts.niramit(fontSize: 12),),
+          child: Text("${storenstence.userModel?.about}",style: GoogleFonts.niramit(fontSize: 12),),
         ),
       ),
     );

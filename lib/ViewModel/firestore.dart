@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tramber/Model/place_model.dart';
 import 'package:tramber/Model/user_model.dart';
 import 'package:tramber/View/home.dart';
 import 'package:tramber/ViewModel/firebase_auths.dart';
@@ -47,5 +46,12 @@ class Firestore with ChangeNotifier {
     await docs.update(userModel.toJson());
     notifyListeners();
     await getloginUSer(userID, context);
+  }
+
+  ///////////////////add place IMAGE////////////////////////
+  addPlaceDetailsToFirestore(PlaceModel placeModel) async {
+    final docs = db.collection("Places").doc();
+   await docs.set(placeModel.toJson(docs.id));
+    print("*****************image added****************");
   }
 }

@@ -79,16 +79,17 @@ await auth.signInWithCredential(credential)
       .then((value) async {
         await storenstence.addUserToCollectionUser(
     value.user?.uid,
-            UserModel(
-
-                email: "${gUser?.email}",
+          UserModel(
+            label: "",
+            age: "",
+             email: "${gUser?.email}",
                 gender: "",
                 password: "",
                 phonenumber: 0,
                 profileimage: "${gUser?.photoUrl}",
                 proofimage: "",
                 userID: "${ value.user?.uid}",
-                username: "${gUser?.displayName}"),
+                username: "${gUser?.displayName}", about: "", address: "", area: "", city: "", hostingDetails: "", message: "", nickeNmae: "", pincode: "", state: ""),
             context);
 
         setLoginPrefertrue();

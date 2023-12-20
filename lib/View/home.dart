@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:provider/provider.dart';
 import 'package:tramber/View/drop_menu/add_place.dart';
 import 'package:tramber/View/drop_menu/bucket_list.dart';
 import 'package:tramber/View/home_Tabs/destination/Destinations.dart';
 import 'package:tramber/View/profile/profile.dart';
+import 'package:tramber/ViewModel/get_locatiion.dart';
+import 'package:tramber/utils/image.dart';
+import 'package:tramber/utils/variables.dart';
 
 import 'home_Tabs/couching/Couching.dart';
 
@@ -124,154 +128,154 @@ class _homeState extends State<home> {
                                         color: HexColor("#055C9D"))),
                               ),
                             )
+                            // Text(
+                            //   " Where would you like to go?",
+                            //   style: TextStyle(
+                            //       fontWeight: FontWeight.w600,
+                            //       fontSize: 16,
+                            //       color: HexColor("#055C9D")),
+                            // )
                           ],
                         )),
                     Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Row(
-                        children: [
-                          Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 335),
-                                child: PopupMenuButton(
-                                  icon: Icon(CupertinoIcons
-                                      .list_dash), //don't specify icon if you want 3 dot menu
-                                  color: HexColor("#055C9D"),
-                                  itemBuilder: (context) => [
-                                    PopupMenuItem<int>(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => home()));
-                                      },
-                                      value: 0,
-                                      child: Text(
-                                        "Home",
+                      padding: EdgeInsets.only(top: 40),
+                      child: Consumer<LocationPrvider>(
+                          builder: (context, locpro, child) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            PopupMenuButton(
+                              icon: const Icon(CupertinoIcons
+                                  .list_dash), //don't specify icon if you want 3 dot menu
+                              color: HexColor("#055C9D"),
+                              itemBuilder: (context) => [
+                                PopupMenuItem<int>(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const home()));
+                                  },
+                                  value: 0,
+                                  child: Text(
+                                    "Home",
+                                    style: GoogleFonts.niramit(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                PopupMenuItem<int>(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const home()));
+                                  },
+                                  value: 1,
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Bucket List    ",
                                         style: GoogleFonts.niramit(
                                           color: Colors.white,
                                           fontSize: 16,
                                         ),
                                       ),
-                                    ),
-                                    PopupMenuItem<int>(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    bucket_list()));
-                                      },
-                                      value: 1,
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "Bucket List    ",
-                                            style: GoogleFonts.niramit(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          Icon(
-                                            CupertinoIcons.bookmark,
-                                            color: Colors.white,
-                                            size: 18,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuItem<int>(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      add_place()));
-                                        },
-                                        value: 2,
-                                        child: Text(
-                                          "Add a Place",
-                                          style: GoogleFonts.niramit(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        )),
-                                    PopupMenuItem<int>(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      add_place()));
-                                        },
-                                        value: 3,
-                                        child: Text(
-                                          "Help",
-                                          style: GoogleFonts.niramit(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        )),
-                                  ],
-                                  onSelected: (item) => {print(item)},
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 125, top: 10),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      CupertinoIcons.placemark,
-                                      size: 16,
-                                    ),
-                                    Text(
-                                      "Bangalore",
-                                      style: GoogleFonts.niramit(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: Colors.black),
-                                    ),
-                                    Text(","),
-                                    Text(
-                                      "India",
-                                      style: GoogleFonts.niramit(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
-                                          color: Colors.black),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 345, top: 10),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => profile()));
-                                  },
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black),
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        image: const DecorationImage(
-                                            fit: BoxFit.fill,
-                                            image:
-                                                AssetImage("asset/img_5.png"))),
+                                      const Icon(
+                                        CupertinoIcons.bookmark,
+                                        color: Colors.white,
+                                        size: 18,
+                                      )
+                                    ],
                                   ),
                                 ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
+                                PopupMenuItem<int>(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AddPlace()));
+                                    },
+                                    value: 2,
+                                    child: Text(
+                                      "Add a Place",
+                                      style: GoogleFonts.niramit(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    )),
+                                PopupMenuItem<int>(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => home()));
+                                    },
+                                    value: 3,
+                                    child: Text(
+                                      "Help",
+                                      style: GoogleFonts.niramit(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    )),
+                              ],
+                              onSelected: (item) => {print(item)},
+                            ),
+                            SizedBox(
+                              child: Row(children: [
+                                const Icon(
+                                  CupertinoIcons.placemark,
+                                  size: 16,
+                                ),
+                                Text(
+                                  "${locpro.place ?? ""}",
+                                  style: GoogleFonts.niramit(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.black),
+                                ),
+                                const Text("|"),
+                                Text(
+                                  "${locpro.country ?? ""}",
+                                  style: GoogleFonts.niramit(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.black),
+                                ),
+                              ]),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => profile()));
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(right: 20),
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black),
+                                    borderRadius: BorderRadius.circular(100),
+                                    image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: storenstence
+                                                    .userModel?.profileimage ==
+                                                ""
+                                            ? imageNotFound
+                                            : NetworkImage(
+                                                "${storenstence.userModel?.profileimage}"))),
+                              ),
+                            )
+                          ],
+                        );
+                      }),
                     ),
                   ],
                 ),

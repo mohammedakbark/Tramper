@@ -1,13 +1,13 @@
 class PlaceModel {
-  String placeID;
+  String? placeID;
   String category;
   String description;
   String image;
-  int latitude;
-  String longitude;
+  double latitude;
+  double longitude;
   String location;
   PlaceModel({
-    required this.placeID,
+     this.placeID,
     required this.category,
     required this.description,
     required this.image,
@@ -16,7 +16,7 @@ class PlaceModel {
     required this.location,
   });
   Map<String, dynamic> toJson(id) => {
-        "placeID": placeID,
+        "placeID": id,
         "category": category,
         "description": description,
         "image": image,

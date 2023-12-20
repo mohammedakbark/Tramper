@@ -53,7 +53,9 @@ Future<void> selectImage(context, int selected) async {
     }
   }
 
-Future  setPlaceImage() async {
+  
+}
+ Future addPlaceImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
@@ -74,4 +76,3 @@ Future  setPlaceImage() async {
       // next add image to firestore 
     }
   }
-}

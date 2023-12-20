@@ -113,7 +113,7 @@ class _profileState extends State<profile> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => add_place()));
+                                            builder: (context) => AddPlace()));
                                   },
                                   value: 2,
                                   child: Text(
