@@ -1,19 +1,17 @@
 // import 'dart:html';
 
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:tramber/Model/place_model.dart';
-import 'package:tramber/View/home.dart';
+import 'package:tramber/View/modules/user/home.dart';
 import 'package:tramber/View/profile/profile.dart';
+
 import 'package:tramber/ViewModel/button_state.dart';
 import 'package:tramber/ViewModel/controll_provider.dart';
-import 'package:tramber/ViewModel/firebase_auths.dart';
 import 'package:tramber/ViewModel/get_locatiion.dart';
 import 'package:tramber/ViewModel/pick_image.dart';
 import 'package:tramber/utils/image.dart';
@@ -59,7 +57,7 @@ class AddPlace extends StatelessWidget {
             )),
             child: SingleChildScrollView(
               child: Column(children: [
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Row(
@@ -75,7 +73,7 @@ class AddPlace extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const home()));
+                                    builder: (context) => const HomePage()));
                           },
                           value: 0,
                           child: Text(
@@ -91,7 +89,7 @@ class AddPlace extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const home()));
+                                    builder: (context) => const HomePage()));
                           },
                           value: 1,
                           child: Row(
@@ -131,7 +129,7 @@ class AddPlace extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => home()));
+                                      builder: (context) => const HomePage()));
                             },
                             value: 3,
                             child: Text(
@@ -151,7 +149,7 @@ class AddPlace extends StatelessWidget {
                           size: 16,
                         ),
                         Text(
-                          "${locpro.place ?? ""}",
+                          locpro.place ?? "",
                           style: GoogleFonts.niramit(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -159,7 +157,7 @@ class AddPlace extends StatelessWidget {
                         ),
                         const Text("|"),
                         Text(
-                          "${locpro.country ?? ""}",
+                          locpro.country ?? "",
                           style: GoogleFonts.niramit(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -170,10 +168,10 @@ class AddPlace extends StatelessWidget {
                     InkWell(
                       onTap: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => profile()));
+                            MaterialPageRoute(builder: (context) => const profile()));
                       },
                       child: Container(
-                        margin: EdgeInsets.only(right: 20),
+                        margin: const EdgeInsets.only(right: 20),
                         height: 30,
                         width: 30,
                         decoration: BoxDecoration(
@@ -243,7 +241,7 @@ class AddPlace extends StatelessWidget {
                                   return sampleList.map((m) {
                                     return Text(
                                       m,
-                                      style: TextStyle(color: Colors.blue),
+                                      style: const TextStyle(color: Colors.blue),
                                     );
                                   }).toList();
                                 })),
@@ -256,12 +254,12 @@ class AddPlace extends StatelessWidget {
                     width: MediaQuery.of(context).size.width / 1.13,
                     decoration: BoxDecoration(
                       color: image == null
-                          ? Color.fromRGBO(104, 187, 227, 0.5)
+                          ? const Color.fromRGBO(104, 187, 227, 0.5)
                           : Colors.transparent,
                       image: DecorationImage(
                           image: image != null
                               ? FileImage(imageFilePlace!)
-                              : AssetImage('asset/images.jpeg')
+                              : const AssetImage('asset/images.jpeg')
                                   as ImageProvider<Object>,
                           fit: BoxFit.fill),
                       borderRadius: BorderRadius.circular(15),
@@ -315,11 +313,11 @@ class AddPlace extends StatelessWidget {
                       },
                       maxLines: 7,
                       controller: description,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Tell us something about this place",
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: new BorderSide(
+                          borderSide: BorderSide(
                               color: Color.fromRGBO(5, 92, 157, 0)),
                         ),
                       ),
@@ -375,12 +373,18 @@ class AddPlace extends StatelessWidget {
                                 latitude: locpro.lat!,
                                 longitude: locpro.lon!,
                                 location: location));
-                        // ignore: use_build_context_synchronously
+                        //     // ignore: use_build_context_synchronously
                         await showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                                  title: Text(
-                                      "Place is send to admin for verification\nThank you"),
+                                  backgroundColor:
+                                      const Color.fromARGB(171, 0, 0, 0),
+                                  title: const Text(
+                                    "Place is send to admin for verification\n\n\nThank you",
+                                    style: TextStyle(
+                                        color:
+                                            Color.fromARGB(167, 255, 255, 255)),
+                                  ),
                                   actions: [
                                     TextButton(
                                         onPressed: () {
@@ -388,9 +392,12 @@ class AddPlace extends StatelessWidget {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      home()));
+                                                      const HomePage()));
                                         },
-                                        child: Text("OK"))
+                                        child: const Text(
+                                          "OK",
+                                          style: TextStyle(color: Colors.red),
+                                        ))
                                   ],
                                 ));
                       }
@@ -425,7 +432,7 @@ class AddPlace extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                               "Once again, thank you for your dedication to making our travel experiences more enjoyable and memorable. Your efforts are greatly appreciated, and I look forward to seeing more exciting additions in the future."),
                           Text(
                             "TRAMPER",

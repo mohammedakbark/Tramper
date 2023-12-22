@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:tramber/Model/user_model.dart';
-import 'package:tramber/View/login/sign_up.dart';
 import 'package:tramber/ViewModel/firestore.dart';
 import 'package:tramber/ViewModel/pick_image.dart';
 import 'package:tramber/utils/variables.dart';

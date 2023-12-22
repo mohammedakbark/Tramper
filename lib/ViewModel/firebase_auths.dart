@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tramber/Model/user_model.dart';
-import 'package:tramber/View/home.dart';
 import 'package:tramber/View/intro_pages/get_start.dart';
+import 'package:tramber/View/modules/user/home.dart';
+
 import 'package:tramber/ViewModel/check_login_preference.dart';
 import 'package:tramber/utils/variables.dart';
 
@@ -57,7 +58,7 @@ class FirebaseAuths {
           .then((value) async {
         setLoginPrefertrue();
         return await Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => home()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       });
     } catch (e) {
       customeShowDiolog("$e", context);
@@ -94,7 +95,7 @@ await auth.signInWithCredential(credential)
 
         setLoginPrefertrue();
         return await Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => home()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       });
     } catch (e) {
       return customeShowDiolog("$e", context);
@@ -116,7 +117,7 @@ await auth.signInWithCredential(credential)
           .then((value) async {
         setLoginPrefertrue();
         return await Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => home()));
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       });
     } catch (e) {
       return customeShowDiolog("$e", context);

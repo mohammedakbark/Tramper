@@ -4,13 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tramber/View/drop_menu/add_place.dart';
 import 'package:tramber/View/drop_menu/bucket_list.dart';
-import 'package:tramber/View/home.dart';
+import 'package:tramber/View/modules/user/home.dart';
+
 import 'package:tramber/View/profile/tabs/about.dart';
-import 'package:tramber/View/profile/tabs/contact.dart';
 import 'package:tramber/View/profile/tabs/hosting.dart';
-import 'package:tramber/View/profile/update_profile.dart';
+
 import 'package:tramber/utils/image.dart';
 import 'package:tramber/utils/variables.dart';
+import 'package:tramber/view/profile/tabs/contact.dart';
+import 'package:tramber/view/profile/update_profile.dart';
 
 class profile extends StatefulWidget {
   const profile({super.key});
@@ -69,10 +71,10 @@ class _profileState extends State<profile> {
                             itemBuilder: (context) => [
                               PopupMenuItem<int>(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => home()));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => HomePage()));
                                 },
                                 value: 0,
                                 child: Text(
@@ -85,10 +87,10 @@ class _profileState extends State<profile> {
                               ),
                               PopupMenuItem<int>(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => bucket_list()));
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) => BucketList()));
                                 },
                                 value: 1,
                                 child: Row(
@@ -128,7 +130,7 @@ class _profileState extends State<profile> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => home()));
+                                            builder: (context) => HomePage()));
                                   },
                                   value: 3,
                                   child: Text(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tramber/View/intro_pages/page_view.dart';
+import 'package:tramber/view/intro_pages/page_view.dart';
 
 class intro1 extends StatefulWidget {
   const intro1({super.key});

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tramber/Model/user_model.dart';
-import 'package:tramber/View/home.dart';
+import 'package:tramber/View/login/login.dart';
+import 'package:tramber/View/modules/user/home.dart';
 import 'package:tramber/utils/variables.dart';
 
-import 'login.dart';
+
 
 class sign_up extends StatefulWidget {
   const sign_up({super.key});
@@ -225,7 +226,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                                   username: userNameCtlr.text, about: "", address: "", area: "", city: "", hostingDetails: "", message: "", nickeNmae: "", pincode: "", state: ""),context);
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => home()));
+                              MaterialPageRoute(builder: (context) => HomePage()));
                           // Navigator.pushReplacement(context,
                           //     MaterialPageRoute(builder: (context) => home()));
                         }
@@ -314,7 +315,7 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                               );
                               
                                  Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => home()));
+                              MaterialPageRoute(builder: (context) => HomePage()));
                             },
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.center,

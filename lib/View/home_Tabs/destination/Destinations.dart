@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tramber/View/modules/user/Category.dart';
 
-import '../../Category.dart';
 import '../../TramModel.dart';
 class Destinations extends StatefulWidget {
   const Destinations({super.key});

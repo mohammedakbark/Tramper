@@ -1,6 +1,7 @@
 
 
-import 'Category.dart';
+import 'package:tramber/View/modules/user/Category.dart';
+
 List<Map<String,dynamic>>beach=[
   {
     'image':'asset/171363924Andaman_Radhanagar_Main.jpg',
