@@ -1,45 +1,40 @@
-class RestaurentModel{
- String restID;
+class RestaurentModel {
+  String? restID;
   String category;
   String description;
   String image;
-  int latitude;
-  String longitude;
+  String restaurentName;
+  // int latitude;
+  // String longitude;
   String location;
   RestaurentModel({
-    required this.restID,
+    this.restID,
+    required this.restaurentName,
     required this.category,
     required this.description,
     required this.image,
-    required this.latitude,
-    required this.longitude,
+    // required this.latitude,
+    // required this.longitude,
     required this.location,
   });
   Map<String, dynamic> toJson(id) => {
-        "restID": restID,
+        "restID": id,
+        "restaurentName":restaurentName,
         "category": category,
         "description": description,
         "image": image,
-        "latitude": latitude,
-        "longitude": longitude,
+        // "latitude": latitude,
+        // "longitude": longitude,
         "location": location,
       };
-  factory RestaurentModel.fromJson(Map<String, dynamic> json) => RestaurentModel(
-      restID: json["restId"],
-      category: json["category"],
-      description: json["description"],
-      image: json["image"],
-      latitude: json["latitude"],
-      longitude: json["longitude"],
-      location: json["location"]);
-
-
-
-
-
-
-
-
-
-
+  factory RestaurentModel.fromJson(Map<String, dynamic> json) =>
+      RestaurentModel(
+        restaurentName:json["restaurentName"],
+          restID: json["restId"],
+          category: json["category"],
+          description: json["description"],
+          image: json["image"],
+          // latitude: json["latitude"],
+          // longitude: json["longitude"],
+          location: json["location"]);
 }

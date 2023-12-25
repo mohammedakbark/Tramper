@@ -18,8 +18,10 @@ class UserModel {
   String hostingDetails;
   String profileimage;
   String proofimage;
+  String userType;
   UserModel(
       {required this.email,
+      required this.userType,
       required this.label,
       required this.age,
       required this.gender,
@@ -39,8 +41,9 @@ class UserModel {
       required this.pincode,
       required this.state});
   Map<String, dynamic> toJson() => {
+    "userType":userType,
         "age": age,
-        "label":label,
+        "label": label,
         "userID": userID,
         "username": username,
         "password": password,
@@ -60,8 +63,9 @@ class UserModel {
         "state": state
       };
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+    userType: json["userType"],
       age: json["age"],
-      label:json["label"],
+      label: json["label"],
       email: json["email"],
       gender: json["gender"],
       password: json["password"],

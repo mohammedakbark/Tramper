@@ -13,4 +13,7 @@ class Controller with ChangeNotifier {
     isImageLoading = value;
     notifyListeners();
   }
+
+  bool isUserHoster = false;
+  
 }

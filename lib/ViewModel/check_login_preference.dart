@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tramber/View/intro_pages/get_start.dart';
+import 'package:tramber/View/modules/admin/homepage_admin.dart';
+import 'package:tramber/View/modules/user/intro_pages/get_start.dart';
 import 'package:tramber/utils/variables.dart';
 
 void checkLoginStatus(context) async {
@@ -9,7 +10,14 @@ void checkLoginStatus(context) async {
   if (isLoggedIn == true) {
     final uid = FirebaseAuth.instance.currentUser!.uid;
     print(uid);
-    await storenstence.getloginUSer(uid, context);
+    if(uid==null||uid.isEmpty){
+  Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => HomePageAdmin()), (route) => false);
+    }else{
+       await storenstence.getloginUSer(uid, context);
+
+    }
+   
   } else {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => intro1()));

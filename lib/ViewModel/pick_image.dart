@@ -52,10 +52,30 @@ Future<void> selectImage(context, int selected) async {
       storenstence.userModel = UserModel.fromJson(userSnapshot.data()!);
     }
   }
-
-  
 }
- Future addPlaceImage() async {
+
+Future addPlaceImage() async {
+  final picker = ImagePicker();
+  final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
+  if (pickedFile != null) {
+    final currenttime = TimeOfDay.now();
+    imageFilePlace = File(pickedFile.path);
+    UploadTask uploadTask = firbaseStorage
+        .ref()
+        .child("placeImage/Admin$currenttime")
+        .putFile(imageFilePlace!, metadata);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadURL = await snapshot.ref.getDownloadURL();
+    return downloadURL;
+    // final doc = db.collection("placeimage").doc();
+
+    // next add image to firestore
+  }
+
+ 
+}
+ Future addHotelImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
@@ -64,15 +84,32 @@ Future<void> selectImage(context, int selected) async {
       imageFilePlace = File(pickedFile.path);
       UploadTask uploadTask = firbaseStorage
           .ref()
-          .child("placeImage/$currentUID $currenttime")
+          .child("HotelImage/Admin$currenttime")
           .putFile(imageFilePlace!, metadata);
       TaskSnapshot snapshot = await uploadTask;
       String downloadURL = await snapshot.ref.getDownloadURL();
       return downloadURL;
       // final doc = db.collection("placeimage").doc();
 
+      // next add image to firestore
+    }
+  }
+  Future addRestaurentImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    SettableMetadata metadata = SettableMetadata(contentType: 'image/jpeg');
+    if (pickedFile != null) {
+      final currenttime = TimeOfDay.now();
+      imageFilePlace = File(pickedFile.path);
+      UploadTask uploadTask = firbaseStorage
+          .ref()
+          .child("RestaurentImage/Admin$currenttime")
+          .putFile(imageFilePlace!, metadata);
+      TaskSnapshot snapshot = await uploadTask;
+      String downloadURL = await snapshot.ref.getDownloadURL();
+      return downloadURL;
+      // final doc = db.collection("placeimage").doc();
 
-
-      // next add image to firestore 
+      // next add image to firestore
     }
   }

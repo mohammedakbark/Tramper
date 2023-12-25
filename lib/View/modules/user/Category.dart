@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:tramber/view/DeCategory.dart';
+import 'package:tramber/View/modules/user/DeCategory.dart';
+import 'package:tramber/View/modules/user/TramModel.dart';
 
-import '../../TramModel.dart';
 class Category extends StatefulWidget {
   const Category({super.key});
 

@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tramber/Model/hotel_model.dart';
 import 'package:tramber/Model/place_model.dart';
+import 'package:tramber/Model/restaurent_model.dart';
 import 'package:tramber/Model/user_model.dart';
 import 'package:tramber/View/modules/user/home.dart';
 import 'package:tramber/ViewModel/firebase_auths.dart';
-
 
 class Firestore with ChangeNotifier {
   UserModel? userModel;
@@ -12,7 +13,9 @@ class Firestore with ChangeNotifier {
   List<UserModel> hosterAllList = [];
   List<UserModel> hostFemaleList = [];
   List<UserModel> hostMaleList = [];
-
+  List<PlaceModel> placeList = [];
+  List<HotelModel> hotelsList = [];
+  List<RestaurentModel> restaurentList = [];
   final db = FirebaseFirestore.instance;
 
   //////////////////////////////add user/////////////////////
@@ -64,18 +67,24 @@ class Firestore with ChangeNotifier {
   }
 
 /////////////////////////fetch current User///////////////////////////////
-  getloginUSer(loginId, context) async {
+  Future fetchCurrentUser(logiId) async {
     DocumentSnapshot<Map<String, dynamic>> userSnapshot =
-        await db.collection("user").doc(loginId).get();
+        await db.collection("user").doc(logiId).get();
     if (userSnapshot.exists) {
       userModel = UserModel.fromJson(userSnapshot.data()!);
       notifyListeners();
       print(userSnapshot.data()!);
       print("--------fetchd user------");
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
-      // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => home()));
     }
+  }
+
+  getloginUSer(loginId, context) async {
+    fetchCurrentUser;
+    notifyListeners();
+
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+    // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => home()));
   }
 
   updateUSerDAta(userID, UserModel userModel, context) async {
@@ -91,5 +100,55 @@ class Firestore with ChangeNotifier {
     final docs = db.collection("Places").doc();
     await docs.set(placeModel.toJson(docs.id));
     print("*****************image added****************");
+  }
+
+  fetchAllPlaces() async {
+    QuerySnapshot<Map<String, dynamic>> placeSnapshot =
+        await db.collection("Places").get();
+    placeList = placeSnapshot.docs.map((doc) {
+      return PlaceModel.fromJson(doc.data());
+    }).toList();
+    notifyListeners();
+    _fetchSorteduser();
+  }
+
+  //////////////////hotel///////////////////
+  addHotels(selectedplaceId, HotelModel hotelModel) {
+    final hotelDocs =
+        db.collection("Places").doc(selectedplaceId).collection("Hotels").doc();
+    hotelDocs.set(hotelModel.toJson(hotelDocs.id));
+    notifyListeners();
+  }
+
+  fetchAllHotelFromSelectedPlace(placeId) async {
+    QuerySnapshot<Map<String, dynamic>> hotelSnapshot =
+        await db.collection("Places").doc(placeId).collection("Hotels").get();
+    hotelsList = hotelSnapshot.docs.map((e) {
+      return HotelModel.fromJson(e.data());
+    }).toList();
+    notifyListeners();
+  }
+
+  ////////////////////////////////restaurent////////////////////
+  addRestaurent(selectedplaceId, RestaurentModel restaurentModel) {
+    final restaurentDocs = db
+        .collection("Places")
+        .doc(selectedplaceId)
+        .collection("Restaurent")
+        .doc();
+    restaurentDocs.set(restaurentModel.toJson(restaurentDocs.id));
+    notifyListeners();
+  }
+
+  fetchAllRestaurentFromSelectedPlace(placeId) async {
+    QuerySnapshot<Map<String, dynamic>> restSnapshot = await db
+        .collection("Places")
+        .doc(placeId)
+        .collection("Restaurent")
+        .get();
+    restaurentList = restSnapshot.docs.map((e) {
+      return RestaurentModel.fromJson(e.data());
+    }).toList();
+    notifyListeners();
   }
 }

@@ -1,7 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tramber/View/intro_pages/splash_screen.dart';
+import 'package:tramber/View/modules/admin/admin_login.dart';
+import 'package:tramber/View/modules/admin/homepage_admin.dart';
+import 'package:tramber/View/modules/admin/place/placelist.dart';
+import 'package:tramber/View/modules/user/intro_pages/splash_screen.dart';
+import 'package:tramber/View/modules/user/profile/profile.dart';
 
 import 'package:tramber/ViewModel/check_login_preference.dart';
 import 'package:tramber/ViewModel/controll_provider.dart';
@@ -49,7 +53,9 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
         ),
         home: const splash_screen(),
-        // home: LoginAdmin(),
+        // home: HomePageAdmin(),
+        // home: PlaceListPage(),
+        // home: profile(),
         // debugShowCheckedModeBanner: false,
       ),
     );

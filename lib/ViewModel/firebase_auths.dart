@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tramber/Model/user_model.dart';
-import 'package:tramber/View/intro_pages/get_start.dart';
 import 'package:tramber/View/modules/user/home.dart';
+import 'package:tramber/View/modules/user/intro_pages/get_start.dart';
 
 import 'package:tramber/ViewModel/check_login_preference.dart';
 import 'package:tramber/utils/variables.dart';
@@ -57,8 +57,10 @@ class FirebaseAuths {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         setLoginPrefertrue();
-        return await Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        return await Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+            (route) => false);
       });
     } catch (e) {
       customeShowDiolog("$e", context);
@@ -75,22 +77,33 @@ class FirebaseAuths {
       final credential = GoogleAuthProvider.credential(
           accessToken: gAuth?.accessToken, idToken: gAuth?.idToken);
 
-await auth.signInWithCredential(credential)
-      // return await auth.signInWithCredential(credential)
-      .then((value) async {
+      await auth
+          .signInWithCredential(credential)
+          // return await auth.signInWithCredential(credential)
+          .then((value) async {
         await storenstence.addUserToCollectionUser(
-    value.user?.uid,
-          UserModel(
-            label: "",
-            age: "",
-             email: "${gUser?.email}",
+            value.user?.uid,
+            UserModel(
+              userType: "USER",
+                label: "",
+                age: "",
+                email: "${gUser?.email}",
                 gender: "",
                 password: "",
                 phonenumber: 0,
                 profileimage: "${gUser?.photoUrl}",
                 proofimage: "",
-                userID: "${ value.user?.uid}",
-                username: "${gUser?.displayName}", about: "", address: "", area: "", city: "", hostingDetails: "", message: "", nickeNmae: "", pincode: "", state: ""),
+                userID: "${value.user?.uid}",
+                username: "${gUser?.displayName}",
+                about: "",
+                address: "",
+                area: "",
+                city: "",
+                hostingDetails: "",
+                message: "",
+                nickeNmae: "",
+                pincode: "",
+                state: ""),
             context);
 
         setLoginPrefertrue();
