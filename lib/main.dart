@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tramber/View/modules/admin/admin_login.dart';
 import 'package:tramber/View/modules/admin/homepage_admin.dart';
 import 'package:tramber/View/modules/admin/place/placelist.dart';
+import 'package:tramber/View/modules/user/attractionpage/placepage.dart';
 import 'package:tramber/View/modules/user/intro_pages/splash_screen.dart';
 import 'package:tramber/View/modules/user/profile/profile.dart';
 
@@ -52,6 +53,7 @@ class _MyAppState extends State<MyApp> {
           // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
+            //  home: const PlaceMainPage(),
         home: const splash_screen(),
         // home: HomePageAdmin(),
         // home: PlaceListPage(),

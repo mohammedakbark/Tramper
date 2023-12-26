@@ -1,40 +1,26 @@
-class AttractionModel {
-  String bucketListId;
+class BucketListModel {
+  String? bucketListId;
   String placeID;
-  // String category;
-  // String description;
+
   String image;
-  // int latitude;
-  // String longitude;
+
   String location;
-  AttractionModel({
-    required this.bucketListId,
-     required this.placeID,
-    // required this.category,
-    // required this.description,
+  BucketListModel({
+    this.bucketListId,
+    required this.placeID,
     required this.image,
-    // required this.latitude,
-    // required this.longitude,
     required this.location,
   });
   Map<String, dynamic> toJson(id) => {
-        "bucketListId": bucketListId,
-         "placeID": placeID,
-        // "category": category,
-        // "description": description,
+        "bucketListId": id,
+        "placeID": placeID,
         "image": image,
-        // "latitude": latitude,
-        // "longitude": longitude,
         "location": location,
       };
-  factory AttractionModel.fromJson(Map<String, dynamic> json) =>
-      AttractionModel(
+  factory BucketListModel.fromJson(Map<String, dynamic> json) =>
+      BucketListModel(
           bucketListId: json["bucketListId"],
-             placeID: json["placeID"],
-          // category: json["category"],
-          // description: json["description"],
+          placeID: json["placeID"],
           image: json["image"],
-          // latitude: json["latitude"],
-          // longitude: json["longitude"],
           location: json["location"]);
 }

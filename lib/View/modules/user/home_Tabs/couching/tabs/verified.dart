@@ -17,6 +17,7 @@ class _verifiedState extends State<verified> {
   @override
   Widget build(BuildContext context) {
     return Consumer<Firestore>(builder: (context, storepro, child) {
+     
       return GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: 0.9, crossAxisCount: 2),
@@ -24,8 +25,12 @@ class _verifiedState extends State<verified> {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HosterProfile()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HosterProfile(
+                              hosterId: storepro.hosterAllList[index].userID,
+                            )));
               },
               child: Container(
                 margin: const EdgeInsets.all(5),
@@ -50,7 +55,7 @@ class _verifiedState extends State<verified> {
                             image: DecorationImage(
                                 image: storepro.hosterAllList[index]
                                             .profileimage ==
-                                        null
+                                        ""
                                     ? imageNotFound
                                     : NetworkImage(storepro
                                         .hosterAllList[index].profileimage),

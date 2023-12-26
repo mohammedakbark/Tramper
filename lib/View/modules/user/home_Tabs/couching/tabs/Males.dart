@@ -18,14 +18,16 @@ class _MalesState extends State<Males> {
   Widget build(BuildContext context) {
     return Consumer<Firestore>(builder: (context, storepro, child) {
       return GridView.builder(
-          gridDelegate:const  SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               childAspectRatio: 0.9, crossAxisCount: 2),
           itemCount: storepro.hostMaleList.length,
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const HosterProfile()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HosterProfile(hosterId: storepro.hostMaleList[index].userID,)));
               },
               child: Container(
                 margin: const EdgeInsets.all(5),
@@ -111,7 +113,7 @@ class _MalesState extends State<Males> {
                               image: DecorationImage(
                                   image: storepro.hostMaleList[index]
                                               .profileimage ==
-                                          null
+                                          ""
                                       ? imageNotFound
                                       : NetworkImage(storepro
                                           .hostMaleList[index].profileimage),

@@ -21,7 +21,7 @@ class update_profile extends StatefulWidget {
 class _update_profileState extends State<update_profile> {
   String selectedGender = 'MALE';
   List<String> options = ['MALE', "FEMALE"];
-  String selectedUserType = 'USER';
+  String selectedUserType = "USER";
   List<String> userOptions = ['USER', "HOSTER"];
   final ImagePicker _picker = ImagePicker();
 

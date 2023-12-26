@@ -19,6 +19,7 @@ class DeCategory extends StatefulWidget {
 class _DeCategoryState extends State<DeCategory> {
   @override
   Widget build(BuildContext context) {
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
     return Scaffold(
       body: Container(
         alignment: Alignment.center,

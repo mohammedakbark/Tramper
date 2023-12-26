@@ -6,8 +6,6 @@ import 'package:tramber/View/modules/user/home.dart';
 import 'package:tramber/View/modules/user/login/login.dart';
 import 'package:tramber/utils/variables.dart';
 
-
-
 class sign_up extends StatefulWidget {
   const sign_up({super.key});
 
@@ -15,15 +13,13 @@ class sign_up extends StatefulWidget {
   State<sign_up> createState() => _sign_upState();
 }
 
-
-
 class _sign_upState extends State<sign_up> {
   TextEditingController emailCtlr = TextEditingController();
-TextEditingController passwordCtlr = TextEditingController();
-TextEditingController conforrmPasswordCtlr = TextEditingController();
-TextEditingController userNameCtlr = TextEditingController();
-TextEditingController numberCtlr = TextEditingController();
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  TextEditingController passwordCtlr = TextEditingController();
+  TextEditingController conforrmPasswordCtlr = TextEditingController();
+  TextEditingController userNameCtlr = TextEditingController();
+  TextEditingController numberCtlr = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final hight = MediaQuery.of(context).size.height;
@@ -212,22 +208,34 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                           int phonemuber = int.parse(numberCtlr.text);
                           // ignore: use_build_context_synchronously
                           await storenstence.addUserToCollectionUser(
-                            authInstence.uID,
-                             UserModel( 
-                              userType: "USER",
-                              label: "", 
-                              age: "",
-                              email: emailCtlr.text,
+                              authInstence.uID,
+                              UserModel(
+                                  userType: "USER",
+                                  label: "",
+                                  age: "",
+                                  email: emailCtlr.text,
                                   gender: "",
                                   password: passwordCtlr.text,
                                   phonenumber: phonemuber,
                                   profileimage: "",
                                   proofimage: "",
                                   userID: "${authInstence.uID}",
-                                  username: userNameCtlr.text, about: "", address: "", area: "", city: "", hostingDetails: "", message: "", nickeNmae: "", pincode: "", state: ""),context);
+                                  username: userNameCtlr.text,
+                                  about: "",
+                                  address: "",
+                                  area: "",
+                                  city: "",
+                                  hostingDetails: "",
+                                  message: "",
+                                  nickeNmae: "",
+                                  pincode: "",
+                                  state: ""),
+                              context);
                           // ignore: use_build_context_synchronously
-                          Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => HomePage()));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()));
                           // Navigator.pushReplacement(context,
                           //     MaterialPageRoute(builder: (context) => home()));
                         }
@@ -276,101 +284,101 @@ final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
                   SizedBox(
                     height: hight * .02,
                   ),
-                  SizedBox(
-                    width: width,
-                    height: 30,
-                    child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              endIndent: 20,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text("or Login with"),
-                          Expanded(
-                              child: Divider(
-                            indent: 20,
-                            color: Colors.black,
-                          ))
-                        ]),
-                  ),
-                  SizedBox(
-                    height: hight * .02,
-                  ),
-                  SizedBox(
-                    width: width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          height: 50,
-                          width: width * .4,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 1, backgroundColor: Colors.white),
-                            onPressed: () {
-                              authInstence.signWithGoogle(
-                                context,
-                              );
-                              
-                                 Navigator.pushReplacement(context,
-                              MaterialPageRoute(builder: (context) => HomePage()));
-                            },
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: Image(
-                                        image: NetworkImage(
-                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe81uHIllpQBPGHUyOOGdw5xOexE8sZhU1fg&usqp=CAU"))),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Google",
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                          width: width * .4,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue),
-                            onPressed: () {},
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.facebook,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Facebook",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
+                  // SizedBox(
+                  //   width: width,
+                  //   height: 30,
+                  //   child: const Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Expanded(
+                  //           child: Divider(
+                  //             endIndent: 20,
+                  //             color: Colors.black,
+                  //           ),
+                  //         ),
+                  //         Text("or Login with"),
+                  //         Expanded(
+                  //             child: Divider(
+                  //           indent: 20,
+                  //           color: Colors.black,
+                  //         ))
+                  //       ]),
+                  // ),
+                  // SizedBox(
+                  //   height: hight * .02,
+                  // ),
+                  // SizedBox(
+                  //   width: width,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 50,
+                  //         width: width * .4,
+                  //         child: ElevatedButton(
+                  //           style: ElevatedButton.styleFrom(
+                  //               elevation: 1, backgroundColor: Colors.white),
+                  //           onPressed: () {
+                  //             authInstence.signWithGoogle(
+                  //               context,
+                  //             );
+
+                  //                Navigator.pushReplacement(context,
+                  //             MaterialPageRoute(builder: (context) => HomePage()));
+                  //           },
+                  //           child: const Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               SizedBox(
+                  //                   height: 20,
+                  //                   width: 20,
+                  //                   child: Image(
+                  //                       image: NetworkImage(
+                  //                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe81uHIllpQBPGHUyOOGdw5xOexE8sZhU1fg&usqp=CAU"))),
+                  //               SizedBox(
+                  //                 width: 20,
+                  //               ),
+                  //               Text(
+                  //                 "Google",
+                  //                 style: TextStyle(
+                  //                     color: Colors.grey,
+                  //                     fontWeight: FontWeight.w600),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       SizedBox(
+                  //         height: 50,
+                  //         width: width * .4,
+                  //         child: ElevatedButton(
+                  //           style: ElevatedButton.styleFrom(
+                  //               backgroundColor: Colors.blue),
+                  //           onPressed: () {},
+                  //           child: const Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.facebook,
+                  //                 color: Colors.white,
+                  //                 size: 30,
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 20,
+                  //               ),
+                  //               Text(
+                  //                 "Facebook",
+                  //                 style: TextStyle(
+                  //                     color: Colors.white,
+                  //                     fontWeight: FontWeight.w600),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // )
                 ]),
               ),
             ),

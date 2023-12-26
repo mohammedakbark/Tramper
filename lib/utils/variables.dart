@@ -6,7 +6,7 @@ import 'package:tramber/ViewModel/get_locatiion.dart';
 
 FirebaseAuths authInstence = FirebaseAuths();
 Firestore storenstence = Firestore();
-final currentUID = FirebaseAuth.instance.currentUser!.uid;
+String currentUID = FirebaseAuth.instance.currentUser!.uid;
 LocationPrvider locationInstence = LocationPrvider();
 
  ButtonState buttonState = ButtonState.defaultvalue;

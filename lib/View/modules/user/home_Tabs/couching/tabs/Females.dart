@@ -30,7 +30,7 @@ class _FemalesState extends State<Females> {
             return InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const HosterProfile()));
+                    MaterialPageRoute(builder: (context) =>  HosterProfile(hosterId: storepro.hostFemaleList[index].userID,)));
               },
               child: Container(
                 margin: const EdgeInsets.all(5),
@@ -116,7 +116,7 @@ class _FemalesState extends State<Females> {
                               image: DecorationImage(
                                   image: storepro.hostFemaleList[index]
                                               .profileimage ==
-                                          null
+                                          ""
                                       ? imageNotFound
                                       : NetworkImage(storepro
                                           .hostFemaleList[index].profileimage),

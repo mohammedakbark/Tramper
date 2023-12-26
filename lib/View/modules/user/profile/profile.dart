@@ -316,6 +316,7 @@ class _profileState extends State<profile> {
                           builder: (context) => Center(
                                 child: ElevatedButton(
                                   onPressed: () {
+                                    
                                     authInstence.signOut(context);
                                   },
                                   child: const Text("Log out?"),

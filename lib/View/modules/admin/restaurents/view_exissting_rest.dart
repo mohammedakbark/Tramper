@@ -18,7 +18,7 @@ class ViewResaturentFromSelectedPlace extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Hotels in $Place",
+          "Restaurents in $Place",
           style: GoogleFonts.poppins(fontSize: 26),
         ),
       ),
@@ -56,8 +56,6 @@ class ViewResaturentFromSelectedPlace extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      
-                     
                       Text(
                         "Description:${list[index].description}",
                         style: GoogleFonts.poppins(

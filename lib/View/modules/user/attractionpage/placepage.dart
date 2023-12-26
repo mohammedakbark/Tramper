@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:tramber/View/modules/user/drop_menu/bucket_list.dart';
+import 'package:tramber/View/modules/admin/hotel/view_exissting_hotels.dart';
+import 'package:tramber/View/modules/admin/restaurents/view_exissting_rest.dart';
+import 'package:tramber/View/modules/user/attractionpage/tabs/attraction_tab.dart';
+import 'package:tramber/View/modules/user/attractionpage/tabs/hotel_tab.dart';
+import 'package:tramber/View/modules/user/attractionpage/tabs/restaurent_tab.dart';
 import 'package:tramber/View/modules/user/home_Tabs/couching/Couching.dart';
 import 'package:tramber/View/modules/user/home_Tabs/destination/Destinations.dart';
 
@@ -14,29 +18,47 @@ import 'package:tramber/ViewModel/get_locatiion.dart';
 import 'package:tramber/utils/image.dart';
 import 'package:tramber/utils/variables.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class PlaceMainPage extends StatefulWidget {
+  String Place;
+  String placeId;
+  String image;
+  String description;
+  PlaceMainPage(
+      {super.key,
+      required this.placeId,
+      required this.Place,
+      required this.image,
+      required this.description});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<PlaceMainPage> createState() => _PlaceMainPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PlaceMainPageState extends State<PlaceMainPage> {
   int current = 0;
 
   var are = TextEditingController();
   // List of tab bar items
 
-  List<String> texts = [
-    "\tDestinations",
-    "Couching",
+  List<Map<String, dynamic>> items = [
+    {
+      'name': 'Attraction',
+    },
+    {
+      'name': 'Restaurent',
+    },
+    {
+      'name': 'Hotels',
+    },
   ];
-  List<Widget> tabs2 = [
-    Destinations(),
-    const Couching(),
-  ];
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> tabs2 = [
+      Attraction(image: widget.image, description: widget.description,place: widget.Place),
+      Restaurent(),
+      Hotels()
+    ];
     // Provider.of<Firestore>(context, listen: false).fetchDatas(currentUID);
 
     final hight = MediaQuery.of(context).size.height;
@@ -44,7 +66,7 @@ class _HomePageState extends State<HomePage> {
 
     return Consumer<Firestore>(builder: (context, firestore, cild) {
       return FutureBuilder(
-          future: firestore.fetchDatas(currentUID),
+          future: firestore.fetchAllHotelAndRestaurentsSelectedPlace(widget.placeId,widget.Place),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
@@ -67,10 +89,10 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context) => [
                     PopupMenuItem<int>(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const HomePage()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const HomePage()));
                       },
                       value: 0,
                       child: Text(
@@ -83,10 +105,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                     PopupMenuItem<int>(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const BucketList()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const HomePage()));
                       },
                       value: 1,
                       child: Row(
@@ -121,10 +143,10 @@ class _HomePageState extends State<HomePage> {
                     //     )),
                     PopupMenuItem<int>(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage()));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => HomePage()));
                         },
                         value: 3,
                         child: Text(
@@ -188,9 +210,20 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              body: SizedBox(
+              body: Container(
                 height: double.infinity,
                 width: double.infinity,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                      Color.fromARGB(255, 255, 255, 255),
+                      Color.fromARGB(255, 212, 240, 255),
+                      Color.fromARGB(255, 175, 211, 231),
+                      Color.fromARGB(255, 176, 195, 206)
+                      // Colors.blue
+                    ])),
                 child: Column(
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -199,94 +232,77 @@ class _HomePageState extends State<HomePage> {
                       height: hight * .3,
                       width: width,
 
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.fill,
-                              image: AssetImage("asset/homemainimage.png"))),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 70,
-                          ),
-
-                          //   return Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     children: [
-
-                          //     ],
-                          //   );
-                          // }),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 100),
-                            child: SizedBox(
-                              height: 50,
-                              width: double.infinity,
-                              child: ListView.separated(
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(
-                                      width: 20,
-                                    );
-                                  },
-                                  itemCount: 2,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              current = index;
-                                            });
-                                          },
-                                          child: Text(
-                                            texts[index],
-                                            style: GoogleFonts.niramit(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(
-                                                    255, 4, 82, 147),
-                                                fontWeight: FontWeight.w700),
+                              image: NetworkImage(widget.image))),
+                    ),
+                    Text(
+                      "LETS TRAMPER ${widget.Place.toUpperCase()}",
+                      style: GoogleFonts.marcellus(
+                          color: Color.fromARGB(255, 181, 94, 68),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: items.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        current = index;
+                                      });
+                                    },
+                                    child: AnimatedContainer(
+                                      alignment: Alignment.topLeft,
+                                      margin: EdgeInsets.all(5),
+                                      height: 35,
+                                      width: 120,
+                                      decoration: BoxDecoration(
+                                        color: current == index
+                                            ? HexColor("#055C9D")
+                                            : HexColor("#FFFFFF"),
+                                        borderRadius: BorderRadius.circular(12),
+                                        border: Border.all(
+                                            color: HexColor("#055C9D")),
+                                      ),
+                                      duration: Duration(),
+                                      child: Wrap(
+                                        spacing: 25,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              left: 8,
+                                              top: 5,
+                                            ),
+                                            child: Text(
+                                              items[index]['name'],
+                                              style: GoogleFonts.niramit(
+                                                  color: HexColor("#68BBE3"),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
-                                        ),
-                                        Visibility(
-                                            visible: current == index,
-                                            child: Container(
-                                              height: 1,
-                                              width: 70,
-                                              color: Colors.black,
-                                            )),
-                                      ],
-                                    );
-                                  }),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Container(
-                            height: 50,
-                            width: 350,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border.all(color: Colors.cyan)),
-                            child: Center(
-                              child: Text(
-                                "Where would you like to go?",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: HexColor("#055C9D"),
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                                          // Padding(
+                                          //   padding:
+                                          //       const EdgeInsets.only(top: 4),
+                                          //   child: Icon(
+                                          //     items[index]['icon'],
+                                          //   ),
+                                          // )
+                                        ],
+                                      ),
+                                    )),
+                              ],
+                            );
+                          }),
                     ),
                     Expanded(
                       child: SizedBox(

@@ -186,104 +186,102 @@ class _loginState extends State<login> {
                   SizedBox(
                     height: hight * .02,
                   ),
-                  SizedBox(
-                    width: width,
-                    height: 30,
-                    child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              endIndent: 20,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text("or Login with"),
-                          Expanded(
-                              child: Divider(
-                            indent: 20,
-                            color: Colors.black,
-                          ))
-                        ]),
-                  ),
+                  // SizedBox(
+                  //   width: width,
+                  //   height: 30,
+                  //   child: const Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+                  //         Expanded(
+                  //           child: Divider(
+                  //             endIndent: 20,
+                  //             color: Colors.black,
+                  //           ),
+                  //         ),
+                  //         Text("or Login with"),
+                  //         Expanded(
+                  //             child: Divider(
+                  //           indent: 20,
+                  //           color: Colors.black,
+                  //         ))
+                  //       ]),
+                  // ),
                   SizedBox(
                     height: hight * .05,
                   ),
-                  SizedBox(
-                    width: width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          height: 50,
-                          width: width * .4,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                elevation: 1, backgroundColor: Colors.white),
-                            onPressed: () {
-                              authInstence.signWithGoogle(
-                                context,
-                              );
-                            },
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: Image(
-                                        image: NetworkImage(
-                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe81uHIllpQBPGHUyOOGdw5xOexE8sZhU1fg&usqp=CAU"))),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Google",
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                          width: width * .4,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue),
-                            onPressed: () {},
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.facebook,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Facebook",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
+                  // SizedBox(
+                  //   width: width,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: 50,
+                  //         width: width * .4,
+                  //         child: ElevatedButton(
+                  //           style: ElevatedButton.styleFrom(
+                  //               elevation: 1, backgroundColor: Colors.white),
+                  //           onPressed: () {
+                  //             authInstence.signWithGoogle(
+                  //               context,
+                  //             );
+                  //           },
+                  //           child: const Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               SizedBox(
+                  //                   height: 20,
+                  //                   width: 20,
+                  //                   child: Image(
+                  //                       image: NetworkImage(
+                  //                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe81uHIllpQBPGHUyOOGdw5xOexE8sZhU1fg&usqp=CAU"))),
+                  //               SizedBox(
+                  //                 width: 20,
+                  //               ),
+                  //               Text(
+                  //                 "Google",
+                  //                 style: TextStyle(
+                  //                     color: Colors.grey,
+                  //                     fontWeight: FontWeight.w600),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       SizedBox(
+                  //         height: 50,
+                  //         width: width * .4,
+                  //         child: ElevatedButton(
+                  //           style: ElevatedButton.styleFrom(
+                  //               backgroundColor: Colors.blue),
+                  //           onPressed: () {},
+                  //           child: const Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Icon(
+                  //                 Icons.facebook,
+                  //                 color: Colors.white,
+                  //                 size: 30,
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 20,
+                  //               ),
+                  //               Text(
+                  //                 "Facebook",
+                  //                 style: TextStyle(
+                  //                     color: Colors.white,
+                  //                     fontWeight: FontWeight.w600),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // )
                 ]),
               ),
             ),
           ),
-
-        
         ]),
       ),
     ));

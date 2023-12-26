@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tramber/Model/user_model.dart';
+
 class contact2 extends StatefulWidget {
-  const contact2({super.key});
+  UserModel data;
+  contact2({super.key, required this.data});
 
   @override
   State<contact2> createState() => _contact2State();
@@ -22,36 +25,58 @@ class _contact2State extends State<contact2> {
                 children: [
                   Row(
                     children: [
-                      Icon(CupertinoIcons.phone,size: 30,),
+                      Icon(
+                        CupertinoIcons.phone,
+                        size: 30,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 13,left: 3),
-                        child: Text("Contact",style: GoogleFonts.niramit(fontWeight: FontWeight.w700,fontSize: 17),),
+                        padding: const EdgeInsets.only(top: 13, left: 3),
+                        child: Text(
+                          "Contact",
+                          style: GoogleFonts.niramit(
+                              fontWeight: FontWeight.w700, fontSize: 17),
+                        ),
                       ),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 35),
-                    child: Text("-91389280382",style: GoogleFonts.niramit(fontWeight: FontWeight.w400,fontSize: 14),),
+                    child: Text(
+                      "${widget.data.phonenumber}",
+                      style: GoogleFonts.niramit(
+                          fontWeight: FontWeight.w400, fontSize: 14),
+                    ),
                   )
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10,bottom: 10),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.chat_bubble_outline_outlined,size: 30,),
+                        Icon(
+                          Icons.chat_bubble_outline_outlined,
+                          size: 30,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 13,left: 3),
-                          child: Text("Chat",style: GoogleFonts.niramit(fontWeight: FontWeight.w700,fontSize: 17),),
+                          padding: const EdgeInsets.only(top: 13, left: 3),
+                          child: Text(
+                            "Chat",
+                            style: GoogleFonts.niramit(
+                                fontWeight: FontWeight.w700, fontSize: 17),
+                          ),
                         ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 35),
-                      child: Text("-91389280382",style: GoogleFonts.niramit(fontWeight: FontWeight.w400,fontSize: 14),),
+                      child: Text(
+                        "${widget.data.phonenumber}",
+                        style: GoogleFonts.niramit(
+                            fontWeight: FontWeight.w400, fontSize: 14),
+                      ),
                     )
                   ],
                 ),
@@ -61,21 +86,30 @@ class _contact2State extends State<contact2> {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.mail_outline_outlined,size: 30,),
+                      Icon(
+                        Icons.mail_outline_outlined,
+                        size: 30,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 13,left: 3),
-                        child: Text("Mail",style: GoogleFonts.niramit(fontWeight: FontWeight.w700,fontSize: 17),),
+                        padding: const EdgeInsets.only(top: 13, left: 3),
+                        child: Text(
+                          "Mail",
+                          style: GoogleFonts.niramit(
+                              fontWeight: FontWeight.w700, fontSize: 17),
+                        ),
                       ),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 35),
-                    child: Text("jeniffer@hotmail.com",style: GoogleFonts.niramit(fontWeight: FontWeight.w400,fontSize: 14),),
+                    child: Text(
+                      "${widget.data.email}",
+                      style: GoogleFonts.niramit(
+                          fontWeight: FontWeight.w400, fontSize: 14),
+                    ),
                   )
                 ],
               ),
-
-
             ],
           ),
         ),
