@@ -10,7 +10,7 @@ class PlaceListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Firestore>(context, listen: false).fetchAllPlaces();
+    // Provider.of<Firestore>(context, listen: false).fetchAllPlaces();
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     return Scaffold(

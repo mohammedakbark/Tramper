@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:provider/provider.dart';
+import 'package:tramber/Model/bucketlist_model.dart';
 import 'package:tramber/ViewModel/controll_provider.dart';
 import 'package:tramber/ViewModel/firestore.dart';
 import 'package:tramber/utils/image.dart';
+import 'package:tramber/utils/variables.dart';
 
 class Attraction extends StatelessWidget {
   String image;
   String description;
   String place;
+  String placeID;
   Attraction(
       {super.key,
       required this.image,
       required this.description,
-      required this.place});
+      required this.place,
+      required this.placeID});
 
   List<Map<String, dynamic>> placesData = [
     {"name": "Amber Fort", "Image": "asset/one.png"},
@@ -68,8 +72,14 @@ class Attraction extends StatelessWidget {
                             Consumer<Controller>(
                                 builder: (context, controller, child) {
                               return IconButton(
-                                  onPressed: () {
+                                  onPressed: () async{
                                     controller.isplaceSvae();
+                                await    storenstence.addtoBucketList(
+                                        currentUID,
+                                        BucketListModel(
+                                            placeID: placeID,
+                                            image: image,
+                                            location: place));
                                   },
                                   icon: controller.isPlaceSave
                                       ? const Icon(
@@ -150,29 +160,29 @@ class Attraction extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Consumer<Controller>(
-                              builder: (context, controller, child) {
-                            return IconButton(
-                                onPressed: () {
-                                  controller.isplaceSvae();
-                                },
-                                icon: controller.isPlaceSave
-                                    ? const Icon(
-                                        CupertinoIcons.bookmark_fill,
-                                        color: Colors.white,
+                        const Align(
+                            // alignment: Alignment.bottomRight,
+                            // child: Consumer<Controller>(
+                            //     builder: (context, controller, child) {
+                            //   return IconButton(
+                            //       onPressed: () {
+                            //         controller.isplaceSvae();
+                            //       },
+                            //       icon: controller.isPlaceSave
+                            //           ? const Icon(
+                            //               CupertinoIcons.bookmark_fill,
+                            //               color: Colors.white,
 
-                                        // size: 18,
-                                      )
-                                    : const Icon(
-                                        CupertinoIcons.bookmark,
-                                        color: Colors.black,
+                            //               // size: 18,
+                            //             )
+                            //           : const Icon(
+                            //               CupertinoIcons.bookmark,
+                            //               color: Colors.black,
 
-                                        // size: 18,
-                                      ));
-                          }),
-                        ),
+                            //               // size: 18,
+                            //             ));
+                            // }),
+                            ),
                         Text(
                           placesData[index]["name"],
                           style: GoogleFonts.marcellus(

@@ -5,11 +5,10 @@ import 'package:tramber/ViewModel/button_state.dart';
 import 'package:tramber/utils/variables.dart';
 
 class LocationPrvider with ChangeNotifier {
- 
-
   Position? latLonposition;
   Placemark decodeData = Placemark();
   Location? locationData;
+  bool isLocationFetched = false;
 
   double? lat;
   double? lon;
@@ -39,6 +38,7 @@ class LocationPrvider with ChangeNotifier {
       place = decodeData.locality;
       country = decodeData.country;
     });
+    isLocationFetched = false;
     notifyListeners();
     return place;
   }
@@ -46,6 +46,7 @@ class LocationPrvider with ChangeNotifier {
 
   Future<String?> getCurrentLocation() async {
     buttonState = ButtonState.fetching;
+    isLocationFetched = true;
     notifyListeners();
     latLonposition = await _getCurrentLatLonPosition();
     print("lat and loc = ${latLonposition.toString()}");

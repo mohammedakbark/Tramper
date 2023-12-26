@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:tramber/View/modules/user/drop_menu/bucket_list.dart';
 import 'package:tramber/View/modules/user/home.dart';
+import 'package:tramber/View/modules/user/intro_pages/splash_screen.dart';
 import 'package:tramber/View/modules/user/profile/tabs/about.dart';
 import 'package:tramber/View/modules/user/profile/tabs/contact.dart';
 import 'package:tramber/View/modules/user/profile/tabs/hosting.dart';
@@ -38,7 +40,6 @@ class _profileState extends State<profile> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return Consumer<Firestore>(builder: (context, firestore, child) {
       List<Widget> pages = [
         about(
@@ -62,7 +63,7 @@ class _profileState extends State<profile> {
                       alignment: Alignment.topLeft,
                       height: 290,
                       width: double.infinity,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           image: DecorationImage(
                               image: AssetImage("asset/img_6.png"))),
                       child: Stack(
@@ -70,16 +71,17 @@ class _profileState extends State<profile> {
                           Padding(
                             padding: const EdgeInsets.only(right: 335, top: 50),
                             child: PopupMenuButton(
-                              icon: Icon(CupertinoIcons
+                              icon: const Icon(CupertinoIcons
                                   .list_dash), //don't specify icon if you want 3 dot menu
                               color: HexColor("#055C9D"),
                               itemBuilder: (context) => [
                                 PopupMenuItem<int>(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) => HomePage()));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePage()));
                                   },
                                   value: 0,
                                   child: Text(
@@ -92,10 +94,11 @@ class _profileState extends State<profile> {
                                 ),
                                 PopupMenuItem<int>(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) => BucketList()));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BucketList()));
                                   },
                                   value: 1,
                                   child: Row(
@@ -107,7 +110,7 @@ class _profileState extends State<profile> {
                                           fontSize: 16,
                                         ),
                                       ),
-                                      Icon(
+                                      const Icon(
                                         CupertinoIcons.bookmark,
                                         color: Colors.white,
                                         size: 18,
@@ -276,7 +279,7 @@ class _profileState extends State<profile> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => update_profile(
+                                builder: (context) => UpdateProfile(
                                       obj: firestore,
                                     )));
                       },
@@ -315,9 +318,14 @@ class _profileState extends State<profile> {
                           context: context,
                           builder: (context) => Center(
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    
-                                    authInstence.signOut(context);
+                                  onPressed: ()async {
+                                  await  authInstence.signOut(context).then(
+                                        (value) => Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const splash_screen()),
+                                            (route) => false));
                                   },
                                   child: const Text("Log out?"),
                                 ),

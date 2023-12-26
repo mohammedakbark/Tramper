@@ -4,6 +4,7 @@ import 'package:tramber/Model/bucketlist_model.dart';
 import 'package:tramber/Model/hotel_model.dart';
 import 'package:tramber/Model/place_model.dart';
 import 'package:tramber/Model/restaurent_model.dart';
+import 'package:tramber/Model/review_feedback_model.dart';
 import 'package:tramber/Model/user_model.dart';
 import 'package:tramber/View/modules/user/drop_menu/bucket_list.dart';
 import 'package:tramber/View/modules/user/home.dart';
@@ -11,7 +12,9 @@ import 'package:tramber/ViewModel/firebase_auths.dart';
 
 class Firestore with ChangeNotifier {
   UserModel? userModel;
+  List<UserModel> userAllList = [];
   UserModel? hosterModel;
+
   List<UserModel> hosterAllList = [];
   List<UserModel> hostFemaleList = [];
   List<UserModel> hostMaleList = [];
@@ -22,24 +25,28 @@ class Firestore with ChangeNotifier {
   List<PlaceModel> adventuresList = [];
   List<PlaceModel> familyDestinationList = [];
   List<UserModel> selctedPlaceHosterList = [];
+  List<BucketListModel> bucketList = [];
+  List<ReviewFeedbackModel> allRevieList = [];
   final db = FirebaseFirestore.instance;
 
-  Future fetchDatas(lginId) async {
-    await fetchTopCategory();
-    await fetchAdventure();
-    await fetchFamilyDestination();
-    await fetchAllUSer();
-    await fetchCurrentUser(lginId);
-    // notifyListeners();
-  }
-
+////*********************************************************************************** */
   getloginUSer(loginId, context) async {
-    fetchCurrentUser;
+    _fetchCurrentUser;
     notifyListeners();
 
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
     // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => home()));
+  }
+
+//**************************USER***************************************************************//
+  Future fetchDatas(lginId) async {
+    await _fetchTopCategory();
+    await _fetchAdventure();
+    await _fetchFamilyDestination();
+    await fetchAllHoster();
+    await _fetchCurrentUser(lginId);
+    // notifyListeners();
   }
 
   //////////////////////////////add user/////////////////////
@@ -55,7 +62,7 @@ class Firestore with ChangeNotifier {
     }
   }
 
-  fetchAllUSer() async {
+  fetchAllHoster() async {
     QuerySnapshot<Map<String, dynamic>> usersSnapshot = await db
         .collection("user")
         .where("userType", isEqualTo: "HOSTER")
@@ -92,17 +99,37 @@ class Firestore with ChangeNotifier {
     }
   }
 
-////////////////////////////////////////////////////////////////////////////
-  addtoBucketList(currentUser, BucketListModel bucketListModel) async{
+//////////////////////////////bucketList//////////////////////////////////////////////
+  addtoBucketList(currentUser, BucketListModel bucketListModel) async {
     final userCollection = db.collection("user");
     final docs =
         userCollection.doc(currentUser).collection("Bucket List").doc();
-  await  docs.set(bucketListModel.toJson(docs.id));
+    await docs.set(bucketListModel.toJson(docs.id));
   }
 
+  Future fetchAllBucketList(currentUID) async {
+    QuerySnapshot<Map<String, dynamic>> snapshot = await db
+        .collection("user")
+        .doc(currentUID)
+        .collection("Bucket List")
+        .get();
+    bucketList = snapshot.docs.map((doc) {
+      return BucketListModel.fromJson(doc.data());
+    }).toList();
+  }
+
+  removeFromBucketList(curretUID, selectedBucket) async {
+    await db
+        .collection("user")
+        .doc(curretUID)
+        .collection("Bucket List")
+        .doc(selectedBucket)
+        .delete();
+    notifyListeners();
+  }
 /////////////////////////fetch current User///////////////////////////////
 
-  Future fetchCurrentUser(logiId) async {
+  Future _fetchCurrentUser(logiId) async {
     DocumentSnapshot<Map<String, dynamic>> userSnapshot =
         await db.collection("user").doc(logiId).get();
     if (userSnapshot.exists) {
@@ -121,38 +148,81 @@ class Firestore with ChangeNotifier {
     await getloginUSer(userID, context);
   }
 
-  ///////////////////add place IMAGE////////////////////////
-  addPlaceDetailsToFirestore(PlaceModel placeModel) async {
-    final docs = db.collection("Places").doc();
-    await docs.set(placeModel.toJson(docs.id));
-    print("*****************image added****************");
-  }
-
-  fetchAllPlaces() async {
-    QuerySnapshot<Map<String, dynamic>> placeSnapshot =
-        await db.collection("Places").get();
-    placeList = placeSnapshot.docs.map((doc) {
-      return PlaceModel.fromJson(doc.data());
+  ////////////////////////////////////////////
+  Future fetchAllHotelAndRestaurentsSelectedPlace(
+      placeID, selectedPlace) async {
+    QuerySnapshot<Map<String, dynamic>> restSnapshot = await db
+        .collection("Places")
+        .doc(placeID)
+        .collection("Restaurent")
+        .get();
+    restaurentList = restSnapshot.docs.map((e) {
+      return RestaurentModel.fromJson(e.data());
     }).toList();
-    notifyListeners();
-    _fetchSorteduser();
-  }
-
-  //////////////////hotel///////////////////
-  addHotels(selectedplaceId, HotelModel hotelModel) {
-    final hotelDocs =
-        db.collection("Places").doc(selectedplaceId).collection("Hotels").doc();
-    hotelDocs.set(hotelModel.toJson(hotelDocs.id));
-    notifyListeners();
-  }
-
-  fetchAllHotelFromSelectedPlace(placeId) async {
     QuerySnapshot<Map<String, dynamic>> hotelSnapshot =
-        await db.collection("Places").doc(placeId).collection("Hotels").get();
+        await db.collection("Places").doc(placeID).collection("Hotels").get();
     hotelsList = hotelSnapshot.docs.map((e) {
       return HotelModel.fromJson(e.data());
     }).toList();
-    notifyListeners();
+    await _fetchSelectedPlaceHosters(selectedPlace);
+    // await fetchAllRestaurentFromSelectedPlace(placeID);
+    // await fetchAllHotelFromSelectedPlace(placeID);
+  }
+
+  //////////////////////////////////////////////
+  _fetchTopCategory() async {
+    final collection = db.collection("Places");
+    QuerySnapshot<Map<String, dynamic>> placeSnapshot =
+        await collection.where("category", isEqualTo: "TOP CATEGORY").get();
+    topCategoryList = placeSnapshot.docs.map((e) {
+      return PlaceModel.fromJson(e.data());
+    }).toList();
+    // notifyListeners();
+  }
+
+  _fetchAdventure() async {
+    final collection = db.collection("Places");
+    QuerySnapshot<Map<String, dynamic>> placeSnapshot =
+        await collection.where("category", isEqualTo: "ADVENTURES").get();
+    adventuresList = placeSnapshot.docs.map((e) {
+      return PlaceModel.fromJson(e.data());
+    }).toList();
+    // notifyListeners();
+  }
+
+  _fetchFamilyDestination() async {
+    final collection = db.collection("Places");
+    QuerySnapshot<Map<String, dynamic>> placeSnapshot = await collection
+        .where("category", isEqualTo: "FAMILY DESTINATION")
+        .get();
+    familyDestinationList = placeSnapshot.docs.map((e) {
+      return PlaceModel.fromJson(e.data());
+    }).toList();
+    // notifyListeners();
+  }
+
+  ///////////////////////////////////////////////
+  _fetchSelectedPlaceHosters(selectedPlace) async {
+    final collection = db.collection("user");
+    QuerySnapshot<Map<String, dynamic>> snapshot =
+        await collection.where("city", isEqualTo: selectedPlace).get();
+
+    selctedPlaceHosterList = snapshot.docs.map((e) {
+      return UserModel.fromJson(e.data());
+    }).toList();
+  }
+
+  sendFeedBacktoAdmin(ReviewFeedbackModel reviewFeedbackModel, currentUID) {
+    final doc = db.collection("Rview&Feedback").doc();
+    doc.set(reviewFeedbackModel.toJson(currentUID));
+  }
+
+//**************************************************ADMIN************************************************** */
+
+  fetchDataForADMIN() async{
+  await  _fetchAllPlaces();
+  await  _fetchAllUsers();
+  await  _fetchAllReviews();
   }
 
   ////////////////////////////////restaurent////////////////////
@@ -178,67 +248,56 @@ class Firestore with ChangeNotifier {
     notifyListeners();
   }
 
-  ////////////////////////////////////////////
-  Future fetchAllHotelAndRestaurentsSelectedPlace(
-      placeID, selectedPlace) async {
-    QuerySnapshot<Map<String, dynamic>> restSnapshot = await db
-        .collection("Places")
-        .doc(placeID)
-        .collection("Restaurent")
-        .get();
-    restaurentList = restSnapshot.docs.map((e) {
-      return RestaurentModel.fromJson(e.data());
-    }).toList();
+  ///////////////////////HOTELS///////////////////////////////
+  addHotels(selectedplaceId, HotelModel hotelModel) {
+    final hotelDocs =
+        db.collection("Places").doc(selectedplaceId).collection("Hotels").doc();
+    hotelDocs.set(hotelModel.toJson(hotelDocs.id));
+    notifyListeners();
+  }
+
+  fetchAllHotelFromSelectedPlace(placeId) async {
     QuerySnapshot<Map<String, dynamic>> hotelSnapshot =
-        await db.collection("Places").doc(placeID).collection("Hotels").get();
+        await db.collection("Places").doc(placeId).collection("Hotels").get();
     hotelsList = hotelSnapshot.docs.map((e) {
       return HotelModel.fromJson(e.data());
     }).toList();
-    await _fetchSelectedPlaceHosters(selectedPlace);
-    // await fetchAllRestaurentFromSelectedPlace(placeID);
-    // await fetchAllHotelFromSelectedPlace(placeID);
+    notifyListeners();
   }
 
-  //////////////////////////////////////////////
-  fetchTopCategory() async {
-    final collection = db.collection("Places");
+  ///////////////////add place IMAGE////////////////////////
+  addPlaceDetailsToFirestore(PlaceModel placeModel) async {
+    final docs = db.collection("Places").doc();
+    await docs.set(placeModel.toJson(docs.id));
+    print("*****************image added****************");
+  }
+
+  _fetchAllPlaces() async {
     QuerySnapshot<Map<String, dynamic>> placeSnapshot =
-        await collection.where("category", isEqualTo: "TOP CATEGORY").get();
-    topCategoryList = placeSnapshot.docs.map((e) {
-      return PlaceModel.fromJson(e.data());
+        await db.collection("Places").get();
+    placeList = placeSnapshot.docs.map((doc) {
+      return PlaceModel.fromJson(doc.data());
+    }).toList();
+    // notifyListeners();
+    _fetchSorteduser();
+  }
+  //////////////////fetchAllUSer///////////////////////////////////
+
+  _fetchAllUsers() async {
+    QuerySnapshot<Map<String, dynamic>> usersSnapshot =
+        await db.collection("user").get();
+    userAllList = usersSnapshot.docs.map((doc) {
+      return UserModel.fromJson(doc.data());
     }).toList();
     // notifyListeners();
   }
 
-  fetchAdventure() async {
-    final collection = db.collection("Places");
-    QuerySnapshot<Map<String, dynamic>> placeSnapshot =
-        await collection.where("category", isEqualTo: "ADVENTURES").get();
-    adventuresList = placeSnapshot.docs.map((e) {
-      return PlaceModel.fromJson(e.data());
+  _fetchAllReviews() async {
+    QuerySnapshot<Map<String, dynamic>> reviewSnapshot =
+        await db.collection("Rview&Feedback").get();
+    allRevieList = reviewSnapshot.docs.map((doc) {
+      return ReviewFeedbackModel.fromJson(doc.data());
     }).toList();
     // notifyListeners();
-  }
-
-  fetchFamilyDestination() async {
-    final collection = db.collection("Places");
-    QuerySnapshot<Map<String, dynamic>> placeSnapshot = await collection
-        .where("category", isEqualTo: "FAMILY DESTINATION")
-        .get();
-    familyDestinationList = placeSnapshot.docs.map((e) {
-      return PlaceModel.fromJson(e.data());
-    }).toList();
-    // notifyListeners();
-  }
-
-  ///////////////////////////////////////////////
-  _fetchSelectedPlaceHosters(selectedPlace) async {
-    final collection = db.collection("user");
-    QuerySnapshot<Map<String, dynamic>> snapshot =
-        await collection.where("city", isEqualTo: selectedPlace).get();
-
-    selctedPlaceHosterList = snapshot.docs.map((e) {
-      return UserModel.fromJson(e.data());
-    }).toList();
   }
 }

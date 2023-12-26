@@ -14,23 +14,26 @@ class Hosting2 extends StatefulWidget {
 class _Hosting2State extends State<Hosting2> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Container(
-          height: 240,
-          width: MediaQuery.of(context).size.width * .7,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: HexColor("#68BBE3")),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, top: 30, bottom: 30),
-            child: Text(
-              widget.data.about,
-              style: GoogleFonts.niramit(fontSize: 12),
-            ),
-          ),
+    final height = MediaQuery.of(context).size.height;
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Container(
+        height: height * .3,
+        width: MediaQuery.of(context).size.width * .7,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: HexColor("#68BBE3")),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, top: 30, bottom: 30),
+          child: widget.data.about == ""
+              ?const  Center(
+                  child: Text("no data"),
+                )
+              : Text(
+                  widget.data.about,
+                  style: GoogleFonts.niramit(fontSize: 12),
+                ),
         ),
       ),
     );

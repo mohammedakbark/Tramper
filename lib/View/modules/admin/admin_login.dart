@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tramber/View/modules/admin/homepage_admin.dart';
 import 'package:tramber/View/modules/user/home.dart';
+import 'package:tramber/View/modules/user/login/login.dart';
 import 'package:tramber/ViewModel/check_login_preference.dart';
 import 'package:tramber/utils/variables.dart';
 
@@ -16,6 +18,7 @@ class LoginAdmin extends StatefulWidget {
 class _LoginAdminState extends State<LoginAdmin> {
   String email = "admin@gmail.com";
   String password = "123456";
+ 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -109,9 +112,9 @@ class _LoginAdminState extends State<LoginAdmin> {
                       if (value!.isEmpty) {
                         return "Enter Password";
                       }
-                      if (value != password) {
-                        return "password does not matching";
-                      }
+                      // if (value != password) {
+                      //   return "password does not matching";
+                      // }
                       if (value.length < 6) {
                         return "Password Should Minimum 6 Digit";
                       } else {
@@ -148,15 +151,17 @@ class _LoginAdminState extends State<LoginAdmin> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          if (emailController.text == email &&
-                              passwordController.text == password) {
-                            setLoginPrefertrue();
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePageAdmin()),
-                                (route) => false);
-                          }
+                          authInstence.login(emailController.text,
+                              passwordController.text, context,0);
+                          // if (emailController.text == email &&
+                          //     passwordController.text == password) {
+                          //   setLoginPrefertrue();
+                          //   Navigator.pushAndRemoveUntil(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //           builder: (context) => HomePageAdmin()),
+                          //       (route) => false);
+                          // }
                         }
                       },
                       style: ElevatedButton.styleFrom(

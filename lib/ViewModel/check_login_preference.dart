@@ -5,19 +5,18 @@ import 'package:tramber/View/modules/admin/homepage_admin.dart';
 import 'package:tramber/View/modules/user/intro_pages/get_start.dart';
 import 'package:tramber/utils/variables.dart';
 
-void checkLoginStatus(context) async {
+checkLoginStatus(context) async {
   bool isLoggedIn = await getLoggedPrefer();
   if (isLoggedIn == true) {
     final uid = FirebaseAuth.instance.currentUser!.uid;
-    print(uid);
-    if(uid==null||uid.isEmpty){
-  Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => HomePageAdmin()), (route) => false);
-    }else{
-       await storenstence.getloginUSer(uid, context);
 
+    if (uid == adminUid) {
+      return await Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomePageAdmin()),
+          (route) => false);
     }
-   
+    await storenstence.getloginUSer(uid, context);
   } else {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => intro1()));

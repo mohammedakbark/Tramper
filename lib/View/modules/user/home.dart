@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,14 +38,15 @@ class _HomePageState extends State<HomePage> {
   ];
   @override
   Widget build(BuildContext context) {
-    // Provider.of<Firestore>(context, listen: false).fetchDatas(currentUID);
+    
 
     final hight = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    return Consumer<Firestore>(builder: (context, firestore, cild) {
+    return Consumer2<Firestore, LocationPrvider>(
+        builder: (context, firestore, locpro, cild) {
       return FutureBuilder(
-          future: firestore.fetchDatas(currentUID),
+          future: firestore.fetchDatas(FirebaseAuth.instance.currentUser!.uid),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
@@ -137,9 +139,11 @@ class _HomePageState extends State<HomePage> {
                   ],
                   onSelected: (item) => {print(item)},
                 ),
-                title: Consumer<LocationPrvider>(
-                    builder: (context, locpro, child) {
-                  return SizedBox(
+                title: InkWell(
+                  onTap: () async {
+                    await locpro.getCurrentLocation();
+                  },
+                  child: SizedBox(
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -163,8 +167,8 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black),
                           ),
                         ]),
-                  );
-                }),
+                  ),
+                ),
                 actions: [
                   InkWell(
                     onTap: () {
@@ -187,6 +191,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                   )
                 ],
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(10),
+                  child: locpro.isLocationFetched == true
+                      ? const LinearProgressIndicator()
+                      : const SizedBox(),
+                ),
               ),
               body: SizedBox(
                 height: double.infinity,

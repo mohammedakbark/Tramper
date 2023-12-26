@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tramber/Model/user_model.dart';
+import 'package:tramber/View/modules/admin/homepage_admin.dart';
 import 'package:tramber/View/modules/user/home.dart';
 import 'package:tramber/View/modules/user/intro_pages/get_start.dart';
 import 'package:tramber/View/modules/user/intro_pages/splash_screen.dart';
@@ -13,8 +14,7 @@ import 'package:tramber/utils/variables.dart';
 class FirebaseAuths {
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  String? uID;
-  
+  dynamic uID;
 
   sign(
     email,
@@ -52,17 +52,27 @@ class FirebaseAuths {
   login(
     email,
     password,
-    context,
+    context,selected
   ) async {
     try {
-      currentUID= await auth
+      currentUID = await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         setLoginPrefertrue();
-        return await Navigator.pushAndRemoveUntil(
+        if(selected==0){
+           return await Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePageAdmin()),
+            (route) => false);
+
+        }else if(selected==1){
+          return await Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => HomePage()),
             (route) => false);
+
+        }
+        
       });
     } catch (e) {
       customeShowDiolog("$e", context);
@@ -143,26 +153,27 @@ class FirebaseAuths {
   ///
   ///
 
-  void signOut(
+  Future signOut(
     context,
   ) async {
     setLoginPreferfalse();
-    signOutFromMAil(context);
-    signoutFromGoogle(
+    currentUID = null;
+    uID = null;
+    await signOutFromMAil(context);
+    await signoutFromGoogle(
       context,
     );
-
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => splash_screen()), (route) => false);
+    print(currentUID);
+    print(uID);
   }
 
 /////////////////////////////////////////////
-  void signOutFromMAil(context) {
-    FirebaseAuth.instance.signOut();
+  signOutFromMAil(context) async {
+    await FirebaseAuth.instance.signOut();
   }
 
-  void signoutFromGoogle(context) {
-    GoogleSignIn().signOut();
+  signoutFromGoogle(context) async {
+    await GoogleSignIn().signOut();
   }
 }
 

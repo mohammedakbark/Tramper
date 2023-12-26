@@ -10,20 +10,19 @@ import 'package:tramber/ViewModel/firestore.dart';
 import 'package:tramber/ViewModel/pick_image.dart';
 import 'package:tramber/utils/variables.dart';
 
-class update_profile extends StatefulWidget {
+class UpdateProfile extends StatefulWidget {
   dynamic obj;
-  update_profile({super.key, required this.obj});
+  UpdateProfile({super.key, required this.obj});
 
   @override
-  State<update_profile> createState() => _update_profileState();
+  State<UpdateProfile> createState() => _UpdateProfileState();
 }
 
-class _update_profileState extends State<update_profile> {
+class _UpdateProfileState extends State<UpdateProfile> {
   String selectedGender = 'MALE';
   List<String> options = ['MALE', "FEMALE"];
   String selectedUserType = "USER";
   List<String> userOptions = ['USER', "HOSTER"];
-  final ImagePicker _picker = ImagePicker();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override

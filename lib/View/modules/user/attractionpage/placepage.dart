@@ -8,6 +8,7 @@ import 'package:tramber/View/modules/admin/restaurents/view_exissting_rest.dart'
 import 'package:tramber/View/modules/user/attractionpage/tabs/attraction_tab.dart';
 import 'package:tramber/View/modules/user/attractionpage/tabs/hotel_tab.dart';
 import 'package:tramber/View/modules/user/attractionpage/tabs/restaurent_tab.dart';
+import 'package:tramber/View/modules/user/drop_menu/bucket_list.dart';
 import 'package:tramber/View/modules/user/home_Tabs/couching/Couching.dart';
 import 'package:tramber/View/modules/user/home_Tabs/destination/Destinations.dart';
 
@@ -55,7 +56,7 @@ class _PlaceMainPageState extends State<PlaceMainPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> tabs2 = [
-      Attraction(image: widget.image, description: widget.description,place: widget.Place),
+      Attraction(image: widget.image, description: widget.description,place: widget.Place,placeID: widget.placeId),
       Restaurent(),
       Hotels()
     ];
@@ -105,10 +106,10 @@ class _PlaceMainPageState extends State<PlaceMainPage> {
                     ),
                     PopupMenuItem<int>(
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const HomePage()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const BucketList()));
                       },
                       value: 1,
                       child: Row(
