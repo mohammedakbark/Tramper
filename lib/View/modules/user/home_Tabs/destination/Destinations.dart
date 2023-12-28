@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tramber/View/modules/user/Category.dart';
+import 'package:tramber/View/modules/user/home_Tabs/destination/beaches.dart';
+import 'package:tramber/View/modules/user/home_Tabs/destination/DeCategory.dart';
 import 'package:tramber/View/modules/user/TramModel.dart';
 import 'package:tramber/View/modules/user/attractionpage/placepage.dart';
+import 'package:tramber/View/modules/user/home_Tabs/destination/mountain.dart';
 import 'package:tramber/ViewModel/firestore.dart';
+import 'package:tramber/utils/image.dart';
 
 class Destinations extends StatefulWidget {
   Destinations({super.key, required});
@@ -14,13 +17,30 @@ class Destinations extends StatefulWidget {
 }
 
 class _DestinationsState extends State<Destinations> {
+  List<Map<String, dynamic>> categoryItems = [
+    {
+      "Place": "BEACHES",
+      "Image": "asset/beaches.jpeg",
+      "Description":
+          "Beaches are popular destinations for relaxation, water activities, and natural beauty. Coastline with a range of beautiful beaches are Goa, Kovalam, Kanyakumari, Marina beach and so on.",
+      "nav": const Beaches()
+    },
+    {
+      "Place": "MOUNTAINs",
+      "Image": "asset/mountain.jpeg",
+      "Description":
+          "Mountains, these towering giants of the Earth, embody nature's grandeur and timelessness. Their rugged peaks, cloaked in blankets of snow or shrouded in ancient forests, stand as stoic sentinels that have witnessed the passage of countless seasons. Each mountain range tells a unique story, etching its own character on the landscape.",
+      "nav": const Mountains()
+    }
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<Firestore>(builder: (context, firestore, child) {
-        final family = firestore.familyDestinationList;
-        final topCatergory = firestore.topCategoryList;
-        final adventureList = firestore.adventuresList;
+        final allPlaces = firestore.allPlaces;
+        // final family = firestore.familyDestinationList;
+        // final topCatergory = firestore.topCategoryList;
+        // final adventureList = firestore.adventuresList;
         return Container(
           height: double.infinity,
           width: double.infinity,
@@ -108,7 +128,7 @@ class _DestinationsState extends State<Destinations> {
                 SizedBox(
                   height: 350,
                   child: ListView.builder(
-                      itemCount: family.length,
+                      itemCount: allPlaces.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -122,7 +142,7 @@ class _DestinationsState extends State<Destinations> {
                                     image: DecorationImage(
                                         fit: BoxFit.fill,
                                         image:
-                                            NetworkImage(family[index].image)),
+                                            NetworkImage(allPlaces[index].image)),
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(22),
                                         topRight: Radius.circular(22))),
@@ -144,7 +164,7 @@ class _DestinationsState extends State<Destinations> {
                                         padding: const EdgeInsets.only(
                                             left: 10, top: 10),
                                         child: Text(
-                                          family[index].location,
+                                          allPlaces[index].location,
                                           style: GoogleFonts.marcellusSc(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400,
@@ -154,7 +174,7 @@ class _DestinationsState extends State<Destinations> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 5),
                                         child: Text(
-                                          family[index].description,
+                                          allPlaces[index].description,
                                           style:
                                               GoogleFonts.niramit(fontSize: 12),
                                         ),
@@ -180,14 +200,16 @@ class _DestinationsState extends State<Destinations> {
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     PlaceMainPage(
-                                                      Place: family[index]
+                                                      Place: allPlaces[index]
                                                           .location,
                                                       placeId:
-                                                          "${family[index].placeID}",
+                                                          "${allPlaces[index].placeID}",
                                                       image:
-                                                          "${family[index].image}",
-                                                      description: family[index]
+                                                          "${allPlaces[index].image}",
+                                                      description: allPlaces[index]
                                                           .description,
+                                                          lat: allPlaces[index].latitude,
+                                                          lon: allPlaces[index].longitude,
                                                     )));
                                       },
                                       child: Text(
@@ -214,7 +236,7 @@ class _DestinationsState extends State<Destinations> {
                   height: 350,
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: topCatergory.length,
+                      itemCount: categoryItems.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -226,8 +248,8 @@ class _DestinationsState extends State<Destinations> {
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            topCatergory[index].image)),
+                                        image: AssetImage(
+                                            categoryItems[index]["Image"])),
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(22),
                                         topRight: Radius.circular(22))),
@@ -249,7 +271,7 @@ class _DestinationsState extends State<Destinations> {
                                         padding: const EdgeInsets.only(
                                             left: 10, top: 10),
                                         child: Text(
-                                          topCatergory[index].location,
+                                          categoryItems[index]["Place"],
                                           style: GoogleFonts.marcellusSc(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400,
@@ -259,7 +281,7 @@ class _DestinationsState extends State<Destinations> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 5),
                                         child: Text(
-                                          topCatergory[index].description,
+                                          categoryItems[index]["Description"],
                                           style:
                                               GoogleFonts.niramit(fontSize: 12),
                                         ),
@@ -283,16 +305,27 @@ class _DestinationsState extends State<Destinations> {
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => PlaceMainPage(
-                                                    description:
-                                                        topCatergory[index]
-                                                            .description,
-                                                    Place: topCatergory[index]
-                                                        .location,
-                                                    placeId:
-                                                        "${topCatergory[index].placeID}",
-                                                    image:
-                                                        "${topCatergory[index].image}")));
+                                                builder: (context) =>
+                                                    categoryItems[index]["nav"]
+                                                //  PlaceMainPage(
+                                                //     description:
+                                                //         topCatergory[index]
+                                                //             .description,
+                                                //     Place: topCatergory[index]
+                                                //         .location,
+                                                //     placeId:
+                                                //         "${topCatergory[index].placeID}",
+                                                //     image:
+                                                //         "${topCatergory[index].image}")
+                                                // DeCategory(
+                                                //   image:
+                                                //       "assets/noImage.png",
+                                                //   about: "ghfvhgdvhvmsjh",
+                                                //   name: "jvdjhvjkdh",
+                                                //   place: "gvdkvhdfj",
+                                                //   star: 3,
+                                                // )
+                                                ));
                                       },
                                       child: Text(
                                         "Explore Now",
@@ -317,7 +350,7 @@ class _DestinationsState extends State<Destinations> {
                 SizedBox(
                   height: 350,
                   child: ListView.builder(
-                      itemCount: adventureList.length,
+                      itemCount: categoryItems.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -330,8 +363,8 @@ class _DestinationsState extends State<Destinations> {
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            adventureList[index].image)),
+                                        image: AssetImage(
+                                            categoryItems[index]["Image"])),
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(22),
                                         topRight: Radius.circular(22))),
@@ -353,7 +386,7 @@ class _DestinationsState extends State<Destinations> {
                                         padding: const EdgeInsets.only(
                                             left: 10, top: 10),
                                         child: Text(
-                                          adventureList[index].location,
+                                          categoryItems[index]["Place"],
                                           style: GoogleFonts.marcellusSc(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400,
@@ -363,7 +396,7 @@ class _DestinationsState extends State<Destinations> {
                                       Padding(
                                         padding: const EdgeInsets.only(left: 5),
                                         child: Text(
-                                          adventureList[index].description,
+                                          categoryItems[index]["Description"],
                                           style:
                                               GoogleFonts.niramit(fontSize: 12),
                                         ),
@@ -388,17 +421,18 @@ class _DestinationsState extends State<Destinations> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  PlaceMainPage(
-                                                    description:
-                                                        adventureList[index]
-                                                            .description,
-                                                    Place: adventureList[index]
-                                                        .location,
-                                                    placeId:
-                                                        "${adventureList[index].placeID}",
-                                                    image:
-                                                        "${adventureList[index].image}",
-                                                  )));
+                                                  // PlaceMainPage(
+                                                  //   description:
+                                                  //       adventureList[index]
+                                                  //           .description,
+                                                  //   Place: adventureList[index]
+                                                  //       .location,
+                                                  //   placeId:
+                                                  //       "${adventureList[index].placeID}",
+                                                  //   image:
+                                                  //       "${adventureList[index].image}",
+                                                  // )
+                                                  categoryItems[index]["nav"]));
                                     },
                                     child: Text(
                                       "Explore Now",

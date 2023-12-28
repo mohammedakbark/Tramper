@@ -16,7 +16,7 @@ class AddRestaurentsPage extends StatelessWidget {
   String? image;
   TextEditingController description = TextEditingController();
   TextEditingController location = TextEditingController();
-  TextEditingController  resaturentNmae = TextEditingController();
+  TextEditingController resaturentNmae = TextEditingController();
   TextEditingController price = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
@@ -250,14 +250,15 @@ class AddRestaurentsPage extends StatelessWidget {
                                           actions: [
                                             TextButton(
                                                 onPressed: () {
-                                                 Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ViewResaturentFromSelectedPlace(
-                          Place: locationName,
-                          placeId: placeId,
-                        ),
-                      ));
+                                                  Navigator.pushReplacement(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ViewResaturentFromSelectedPlace(
+                                                          Place: locationName,
+                                                          placeId: placeId,
+                                                        ),
+                                                      ));
                                                 },
                                                 child: const Text(
                                                   "OK",

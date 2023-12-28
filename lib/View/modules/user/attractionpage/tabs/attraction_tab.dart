@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+
 import 'package:provider/provider.dart';
 import 'package:tramber/Model/bucketlist_model.dart';
 import 'package:tramber/ViewModel/controll_provider.dart';
@@ -9,16 +11,21 @@ import 'package:tramber/ViewModel/firestore.dart';
 import 'package:tramber/utils/image.dart';
 import 'package:tramber/utils/variables.dart';
 
+
 class Attraction extends StatelessWidget {
   String image;
   String description;
   String place;
   String placeID;
+  double lat;
+  double lon;
   Attraction(
       {super.key,
       required this.image,
       required this.description,
       required this.place,
+      required this.lat,
+      required this.lon,
       required this.placeID});
 
   List<Map<String, dynamic>> placesData = [
@@ -69,17 +76,26 @@ class Attraction extends StatelessWidget {
                                     fontWeight: FontWeight.w500),
                               ),
                             ),
-                            Consumer<Controller>(
-                                builder: (context, controller, child) {
+                            Consumer2<Controller,Firestore>(
+                                builder: (context, controller,firestore, child) {
                               return IconButton(
-                                  onPressed: () async{
+                                  onPressed: () async {
                                     controller.isplaceSvae();
-                                await    storenstence.addtoBucketList(
+                                    if(controller.isPlaceSave==true){
+                                       await storenstence.addtoBucketList(
                                         currentUID,
                                         BucketListModel(
                                             placeID: placeID,
                                             image: image,
-                                            location: place));
+                                            location: place,),placeID);
+
+                                    } if(controller.isPlaceSave==false){
+                                        await firestore
+                                                      .removeFromBucketList(
+                                                          currentUID,
+                                                       placeID);
+                                    }
+                                   
                                   },
                                   icon: controller.isPlaceSave
                                       ? const Icon(
@@ -112,7 +128,10 @@ class Attraction extends StatelessWidget {
                         child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                                 backgroundColor: Colors.white),
-                            onPressed: () {},
+                            onPressed: ()async {
+
+
+                        await    MapsLauncher.launchCoordinates(lat, lon);},
                             child: const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -153,7 +172,6 @@ class Attraction extends StatelessWidget {
                         image: DecorationImage(
                             fit: BoxFit.fill,
                             image: AssetImage(placesData[index]["Image"])),
-                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(30)),
                     width: width * .45,
                     height: 230,
@@ -362,4 +380,20 @@ class Attraction extends StatelessWidget {
       ),
     );
   }
+
+
+
+// void openGoogleMaps(double latitude, double longitude) async {
+//     // Construct the Google Maps URL with the specified coordinates
+//     Uri url = 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+//     // Check if the URL can be launched
+//     if (await canLaunchUrl(url)) {
+//       // Launch the URL
+//       await launchUrl(url);
+//     } else {
+//       // Handle the case where the URL cannot be launched
+//       print('Could not launch $url');
+//     }
+//   }
 }

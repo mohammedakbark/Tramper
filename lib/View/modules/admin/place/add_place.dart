@@ -372,6 +372,7 @@ class AddPlace extends StatelessWidget {
                       } else {
                         await storenstence.addPlaceDetailsToFirestore(
                             PlaceModel(
+                              isLiked: "false",
                                 category: controller.cetegory,
                                 description: description.text,
                                 image: image!,

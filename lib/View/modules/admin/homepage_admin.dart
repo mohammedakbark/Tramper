@@ -16,6 +16,7 @@ class HomePageAdmin extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    // Provider.of<Firestore>(context,listen: false).fetchDataForAdmin();
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -151,59 +152,60 @@ class HomePageAdmin extends StatelessWidget {
         ),
       ),
       body: Consumer<Firestore>(builder: (context, firestore, child) {
-        final list = firestore.userAllList;
+      
         return FutureBuilder(
-            future: firestore.fetchDataForADMIN(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+        future: firestore.fetchDataForAdmin(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+            final list = firestore.userAllList;
 
-              return SizedBox(
-                  height: height,
-                  width: width,
-                  child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: SizedBox(
-                            height: 70,
-                            width: 70,
-                            child: CircleAvatar(
-                              backgroundImage: list[index].profileimage == ""
-                                  ? imageNotFound
-                                  : NetworkImage(
-                                      list[index].profileimage,
-                                    ),
-                            ),
-                          ),
-                          title: Text(
-                            list[index].username.toUpperCase(),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                            list[index].userType,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: list[index].userType == "USER"
-                                    ? Colors.blue
-                                    : Colors.green),
-                          ),
-                          trailing: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red),
-                            onPressed: () {},
-                            child: const Text(
-                              "Remove",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) => const Divider(),
-                      itemCount: list.length));
-            });
+        return SizedBox(
+            height: height,
+            width: width,
+            child: ListView.separated(
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: SizedBox(
+                      height: 70,
+                      width: 70,
+                      child: CircleAvatar(
+                        backgroundImage: list[index].profileimage == ""||list[index].profileimage == null
+                            ? imageNotFound
+                            : NetworkImage(
+                                list[index].profileimage,
+                              ),
+                      ),
+                    ),
+                    title: Text(
+                      list[index].username.toUpperCase(),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      list[index].userType,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: list[index].userType == "USER"
+                              ? Colors.blue
+                              : Colors.green),
+                    ),
+                    trailing: ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      onPressed: () {},
+                      child: const Text(
+                        "Remove",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: list.length));
+        });
       }),
 
       // body: ,

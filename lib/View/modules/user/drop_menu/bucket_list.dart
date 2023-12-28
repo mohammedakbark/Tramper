@@ -233,7 +233,7 @@ class _BucketListState extends State<BucketList> {
                                                 icon: const Icon(
                                                   CupertinoIcons.delete,
                                                   color: Color.fromARGB(
-                                                      255, 255, 0, 0),
+                                                      255, 255, 255, 255),
 
                                                   // size: 18,
                                                 ));

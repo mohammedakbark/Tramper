@@ -22,72 +22,101 @@ class PlaceListPage extends StatelessWidget {
       ),
       body: Consumer<Firestore>(builder: (context, firestore, child) {
         final list = firestore.placeList;
-        return SizedBox(
-          width: width,
-          height: height,
-          child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: .8,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 10),
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Column(
-                    children: [
-                      Text(
-                        list[index].location,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Divider(),
-                      SizedBox(
-                          height: height * .1,
-                          width: width * .35,
-                          child: Image.network(
-                            list[index].image,
-                            fit: BoxFit.fill,
-                          )),
-                      SizedBox(
-                          width: width * .35,
-                          child: Text(
-                            list[index].description,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          )),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddHotelsPage(
-                                      locationName: "${list[index].location}",
-                                      placeId: "${list[index].placeID}")));
-                        },
-                        child: Text(
-                          "Add Hotels",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AddRestaurentsPage(
-                                      locationName: "${list[index].location}",
-                                      placeId: "${list[index].placeID}")));
-                        },
-                        child: Text(
-                          "Add Restaurents",
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      )
-                    ],
-                  ),
+        return FutureBuilder(
+            future: firestore.fetchAllPlaces(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
                 );
-              },
-              itemCount: list.length),
-        );
+              }
+              return SizedBox(
+                width: width,
+                height: height,
+                child: GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: .65,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 10),
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                firestore.deletePlacefromFirestore(
+                                    list[index].placeID);
+                              },
+                              child: const Text(
+                                "Delete",
+                                style: TextStyle(color: Colors.red),
+                              )),
+                          Card(
+                            child: Column(
+                              children: [
+                                Text(
+                                  list[index].location,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Divider(),
+                                SizedBox(
+                                    height: height * .1,
+                                    width: width * .35,
+                                    child: Image.network(
+                                      list[index].image,
+                                      fit: BoxFit.fill,
+                                    )),
+                                SizedBox(
+                                    width: width * .35,
+                                    child: Text(
+                                      list[index].description,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                    )),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => AddHotelsPage(
+                                                locationName:
+                                                    list[index].location,
+                                                placeId:
+                                                    "${list[index].placeID}")));
+                                  },
+                                  child: const Text(
+                                    "Add Hotels",
+                                    style: TextStyle(color: Colors.green),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AddRestaurentsPage(
+                                                    locationName:
+                                                        list[index].location,
+                                                    placeId:
+                                                        "${list[index].placeID}")));
+                                  },
+                                  child: const Text(
+                                    "Add Restaurents",
+                                    style: TextStyle(color: Colors.green),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    itemCount: list.length),
+              );
+            });
       }),
     );
   }

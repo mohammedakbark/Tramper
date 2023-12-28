@@ -3,9 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tramber/ViewModel/check_login_preference.dart';
 import 'package:tramber/ViewModel/get_locatiion.dart';
-import 'package:tramber/utils/variables.dart';
 
-import 'get_start.dart';
 
 class splash_screen extends StatelessWidget {
   const splash_screen({super.key});
@@ -14,13 +12,15 @@ class splash_screen extends StatelessWidget {
   Widget build(BuildContext context) {
     //  print(currentUID);
     // print(authInstence.uID);
-    Future.delayed(const Duration(seconds: 3,),(){
-         checkLoginStatus(context).then((value) =>
-        Provider.of<LocationPrvider>(context, listen: false)
-            .getCurrentLocation());
-
+    Future.delayed(
+        const Duration(
+          seconds: 3,
+        ), () {
+      checkLoginStatus(context)
+       .then((value) =>
+      Provider.of<LocationPrvider>(context, listen: false)
+          .getCurrentLocation());
     });
- 
 
     return Scaffold(
       body: Container(

@@ -1,8 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tramber/ViewModel/firestore.dart';
-import 'package:tramber/utils/image.dart';
 
 class ReviewAndFeedback extends StatelessWidget {
   const ReviewAndFeedback({super.key});
@@ -53,6 +53,7 @@ class ReviewAndFeedback extends StatelessWidget {
               //   ),
               // );
               return ListTile(
+                leading: Text("${index + 1}"),
                 title: Container(
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
@@ -61,16 +62,19 @@ class ReviewAndFeedback extends StatelessWidget {
                   height: height * .1,
                   width: width / 2,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Text(list[index].hosterId ?? "ID NOT PROVIDED"),
                       Text(
                         list[index].message,
-                        style: TextStyle(fontSize: 15),
+                        style: const TextStyle(fontSize: 15),
                       ),
                     ],
                   ),
                 ),
-                trailing: Text(list[index].date,  style:const TextStyle(fontSize: 15,fontWeight: FontWeight.w400)),
+                trailing: Text(list[index].date,
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.w400)),
               );
             },
             itemCount: list.length,

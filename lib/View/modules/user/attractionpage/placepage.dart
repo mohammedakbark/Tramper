@@ -24,11 +24,15 @@ class PlaceMainPage extends StatefulWidget {
   String placeId;
   String image;
   String description;
+    double lat;
+  double lon;
   PlaceMainPage(
       {super.key,
       required this.placeId,
       required this.Place,
       required this.image,
+       required this.lat,
+      required this.lon,
       required this.description});
 
   @override
@@ -56,7 +60,7 @@ class _PlaceMainPageState extends State<PlaceMainPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> tabs2 = [
-      Attraction(image: widget.image, description: widget.description,place: widget.Place,placeID: widget.placeId),
+      Attraction(image: widget.image, description: widget.description,place: widget.Place,placeID: widget.placeId,lat: widget.lat,lon: widget.lon),
       Restaurent(),
       Hotels()
     ];

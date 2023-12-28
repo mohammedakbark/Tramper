@@ -6,8 +6,10 @@ class PlaceModel {
   double latitude;
   double longitude;
   String location;
+  String isLiked;
   PlaceModel({
-     this.placeID,
+    this.placeID,
+    required this.isLiked,
     required this.category,
     required this.description,
     required this.image,
@@ -17,6 +19,7 @@ class PlaceModel {
   });
   Map<String, dynamic> toJson(id) => {
         "placeID": id,
+        "isLiked":isLiked,
         "category": category,
         "description": description,
         "image": image,
@@ -26,6 +29,7 @@ class PlaceModel {
       };
   factory PlaceModel.fromJson(Map<String, dynamic> json) => PlaceModel(
       placeID: json["placeID"],
+      isLiked:json["isLiked"],
       category: json["category"],
       description: json["description"],
       image: json["image"],
