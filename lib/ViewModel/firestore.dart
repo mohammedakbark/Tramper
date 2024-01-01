@@ -6,7 +6,7 @@ import 'package:tramber/Model/place_model.dart';
 import 'package:tramber/Model/restaurent_model.dart';
 import 'package:tramber/Model/review_feedback_model.dart';
 import 'package:tramber/Model/user_model.dart';
-import 'package:tramber/View/modules/user/drop_menu/bucket_list.dart';
+
 import 'package:tramber/View/modules/user/home.dart';
 import 'package:tramber/ViewModel/firebase_auths.dart';
 
