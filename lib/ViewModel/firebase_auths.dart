@@ -49,30 +49,23 @@ class FirebaseAuths {
     }
   }
 
-  login(
-    email,
-    password,
-    context,selected
-  ) async {
+  login(email, password, context, selected) async {
     try {
       currentUID = await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         setLoginPrefertrue();
-        if(selected==0){
-           return await Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomePageAdmin()),
-            (route) => false);
-
-        }else if(selected==1){
+        if (selected == 0) {
           return await Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage()),
-            (route) => false);
-
+              context,
+              MaterialPageRoute(builder: (context) => HomePageAdmin()),
+              (route) => false);
+        } else if (selected == 1) {
+          return await Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+              (route) => false);
         }
-        
       });
     } catch (e) {
       customeShowDiolog("$e", context);
